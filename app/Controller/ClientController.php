@@ -9,6 +9,6 @@ class ClientController
 		$view = new View('templates/client');
 		//echo "Soy un cliente";
 		$client = Client::getClientById(1);
-		$view->render('profile.php', ['client' => $client]);
+		$view->render('profile.php', ['client' => $client, 'pageTitle' => $client->getName() . "'s profile"]);
 	}
 }
