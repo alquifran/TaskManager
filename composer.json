@@ -1,0 +1,10 @@
+{
+    "name": "dreamweb/task-manager",
+    "require": {},
+    "autoload":{
+    	"psr-4":{
+    		"TaskManager\\Bootstrap\\":"Bootstrap/",
+    		"TaskManager\\":"app/"
+    	}
+    }
+}

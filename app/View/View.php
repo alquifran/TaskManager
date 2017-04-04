@@ -1,5 +1,5 @@
 <?php
-namespace DreamWeb\GestorTareas\View;
+namespace TaskManager\View;
 class View{
 	protected $templatePath;
 	protected $attributes;

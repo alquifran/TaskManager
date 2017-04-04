@@ -1,5 +1,5 @@
 <?php
-//namespace DreamWeb\Bootstrap;
+namespace TaskManager\Bootstrap;
 class Config
 {
 	private $data;

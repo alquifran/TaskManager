@@ -1,5 +1,5 @@
 <?php
-//namespace DreamWeb\Bootstrap;
+namespace TaskManager\Bootstrap;
 //use \PDO;
 include 'Config.php';
 class Database
@@ -7,7 +7,7 @@ class Database
 	private static $instance;
 	private function __construct(){}
 	private function __clone(){}
-	private static function connect(): PDO
+	private static function connect()
 	{
 		$dbConfig = Config::getInstance()->get('db');
 		return new PDO(
