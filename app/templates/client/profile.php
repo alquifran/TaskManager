@@ -1,0 +1,1 @@
+Hola cliente <?=$client->getName();?>

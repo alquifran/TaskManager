@@ -1,16 +1,14 @@
 <?php
 namespace TaskManager\Controller;
 use TaskManager\Model\Client;
+use TaskManager\View\View;
 
 class ClientController
 {
 	public function index(){
-		echo "Soy un cliente";
-		$clients = Client::listClient();
-		foreach($clients as $client){
-			echo $client->getName();
-			echo "<br>";
-		}
-
+		$view = new View('templates/client');
+		//echo "Soy un cliente";
+		$client = Client::getClientById(1);
+		$view->render('profile.php', ['client' => $client]);
 	}
 }

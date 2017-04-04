@@ -8,7 +8,7 @@ class View{
 		$this->templatePath = rtrim($templatePath, '/\\') . '/';
 		$this->attributes = $attributes;
 	}
-	public function render(string $template, array $data = [])
+	public function render($template, $data = [])
 	{
 		 $thispath = __DIR__;
 
