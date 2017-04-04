@@ -27,6 +27,16 @@ class Client{
 
 	}
 
+	public static function getClientById($id){
+		$db = Database::getInstance();
+		$req = $db->query("
+			SELECT * 
+			FROM clients 
+			WHERE client_id = '$id'");
+		$client = $req->fetch();
+		return new Client($client['client_id'], $client['client_name'], $client['client_password']);
+
+	}
 
 	function getName(){
 		return $this->name;
@@ -37,5 +47,3 @@ class Client{
 	}
 
 }
-
-
