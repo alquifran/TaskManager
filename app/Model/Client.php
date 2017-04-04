@@ -9,7 +9,11 @@ class Client{
 	private $password;
 	private $id;
 
-	function __construct($id=null,$name,$password){
+	function __construct(
+		$id=null,
+		$name = "",
+		$password = "")
+	{
 		$this->id=$id;
 		$this->name = $name;
 		$this->password=$password;
