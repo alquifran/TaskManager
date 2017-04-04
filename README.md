@@ -1,4 +1,4 @@
-# GestorDeTareas
+# Task Manager
 
 Este proyecto consiste en desarrollar un gestor que permita llevar un registro de tareas, clientes que las solicitan y técnicos que se encargan de dichas tareas.
 
