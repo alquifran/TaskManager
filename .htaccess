@@ -1,0 +1,9 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+
+
+RewriteRule ^(\w*)$ index.php
+
+RewriteRule ^(\w*)/?$ index.php?controller=$1
+RewriteRule ^(\w*)/(\w*)/?$ index.php?controller=$1&action=$2
+RewriteRule ^(\w*)/(\w*)/(\d*)/?$ index.php?controller=$1&action=$2&id=$3
