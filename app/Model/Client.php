@@ -46,6 +46,17 @@ class Client{
 
 	}
 
+	public static function getClientByMail($mail){
+		$db = Database::getInstance();
+		$req = $db->query("
+			SELECT * 
+			FROM clients 
+			WHERE client_mail = '$mail'");
+		$client = $req->fetch();
+		return new Client($client['client_id'], $client['client_name'], $client['client_mail'], $client['client_password']);
+
+	}
+
 	public static function isClient($mail){
 		$db = Database::getInstance();
 		$req = $db->query("
@@ -80,6 +91,14 @@ class Client{
 
 	function setName($name){
 		$this->name = $name;
+	}
+
+	function getMail(){
+		return $this->mail;
+	}
+
+	function setMail($mail){
+		$this->mail = $mail;
 	}
 
 }
