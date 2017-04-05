@@ -1,5 +1,5 @@
-Hola cliente <?=$client->getName();?><br>
-<?=$client->getMail();?>
+Hola admin <?=$admin->getName();?><br>
+<?=$admin->getMail();?>
 <br>
 <form method="POST">
 		<input type="submit" name="logout" value="Cerrar sesión">

@@ -4,7 +4,8 @@ namespace TaskManager\Model;
 use TaskManager\Bootstrap\Database;
 
 
-class Client{
+class Client
+{
 	private $name;
 	private $password;
 	private $mail;
@@ -28,7 +29,8 @@ class Client{
 		$db = Database::getInstance();
 		$req = $db->query('SELECT * FROM clients');
 		foreach($req->fetchAll() as $client){
-			$list[] = new Client($client['client_id'], $client['client_name'], $client['client_mail'], $client['client_password']);
+			$list[] = new Client($client['client_id'], $client['client_name'], $client['client_password']);
+	
 		}
 
 		return $list;
