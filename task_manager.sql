@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-04-2017 a las 13:18:03
+-- Tiempo de generación: 05-04-2017 a las 17:02:31
 -- Versión del servidor: 10.1.19-MariaDB
 -- Versión de PHP: 7.0.13
 
@@ -28,20 +28,21 @@ USE `task_manager`;
 -- Estructura de tabla para la tabla `admins`
 --
 
-CREATE TABLE IF NOT EXISTS `admins` (
-  `admin_id` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `admins`;
+CREATE TABLE `admins` (
+  `admin_id` int(11) NOT NULL,
   `admin_name` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `admin_password` varchar(250) COLLATE utf8_spanish_ci NOT NULL,
-  PRIMARY KEY (`admin_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `admin_mail` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `admins`
 --
 
-INSERT INTO `admins` (`admin_id`, `admin_name`, `admin_password`) VALUES
-(1, 'admin', 'admin'),
-(2, 'admin2', 'admin2');
+INSERT INTO `admins` (`admin_id`, `admin_name`, `admin_password`, `admin_mail`) VALUES
+(1, 'admin', 'admin', 'admin@admin.com'),
+(2, 'admin2', 'admin2', 'admin2@admin.com');
 
 -- --------------------------------------------------------
 
@@ -49,20 +50,24 @@ INSERT INTO `admins` (`admin_id`, `admin_name`, `admin_password`) VALUES
 -- Estructura de tabla para la tabla `clients`
 --
 
-CREATE TABLE IF NOT EXISTS `clients` (
-  `client_id` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `clients`;
+CREATE TABLE `clients` (
+  `client_id` int(11) NOT NULL,
   `client_name` varchar(50) CHARACTER SET latin1 NOT NULL,
   `client_password` varchar(250) CHARACTER SET latin1 NOT NULL,
-  PRIMARY KEY (`client_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `client_mail` varchar(50) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `clients`
 --
 
-INSERT INTO `clients` (`client_id`, `client_name`, `client_password`) VALUES
-(1, 'David', '1234'),
-(2, 'Juan', '4321');
+INSERT INTO `clients` (`client_id`, `client_name`, `client_password`, `client_mail`) VALUES
+(1, 'Davidee', '1234', 'david@david.com'),
+(2, 'Juan', '4321', 'juan@juan.com'),
+(3, 'Ola', 'bla', 'ola@ola.com'),
+(5, 'fran', 'fran', 'fran@fran.com'),
+(8, 'Raul', 'raul', 'raul@raul.com');
 
 -- --------------------------------------------------------
 
@@ -70,12 +75,12 @@ INSERT INTO `clients` (`client_id`, `client_name`, `client_password`) VALUES
 -- Estructura de tabla para la tabla `packs`
 --
 
-CREATE TABLE IF NOT EXISTS `packs` (
-  `pack_id` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `packs`;
+CREATE TABLE `packs` (
+  `pack_id` int(11) NOT NULL,
   `pack_name` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `pack_desc` varchar(250) COLLATE utf8_spanish_ci NOT NULL,
-  PRIMARY KEY (`pack_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `pack_desc` varchar(250) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `packs`
@@ -91,12 +96,12 @@ INSERT INTO `packs` (`pack_id`, `pack_name`, `pack_desc`) VALUES
 -- Estructura de tabla para la tabla `tasks`
 --
 
-CREATE TABLE IF NOT EXISTS `tasks` (
-  `task_id` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `tasks`;
+CREATE TABLE `tasks` (
+  `task_id` int(11) NOT NULL,
   `task_name` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `task_description` longtext COLLATE utf8_spanish_ci NOT NULL,
-  PRIMARY KEY (`task_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `task_description` longtext COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `tasks`
@@ -115,21 +120,88 @@ INSERT INTO `tasks` (`task_id`, `task_name`, `task_description`) VALUES
 -- Estructura de tabla para la tabla `technicians`
 --
 
-CREATE TABLE IF NOT EXISTS `technicians` (
-  `tech_id` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `technicians`;
+CREATE TABLE `technicians` (
+  `tech_id` int(11) NOT NULL,
   `tech_name` varchar(50) CHARACTER SET latin1 NOT NULL,
   `tech_password` varchar(250) CHARACTER SET latin1 NOT NULL,
-  PRIMARY KEY (`tech_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `tech_mail` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `technicians`
 --
 
-INSERT INTO `technicians` (`tech_id`, `tech_name`, `tech_password`) VALUES
-(1, 'tecnico1', '1234'),
-(2, 'tecnico2', '4321');
+INSERT INTO `technicians` (`tech_id`, `tech_name`, `tech_password`, `tech_mail`) VALUES
+(1, 'tecnico1', '1234', 'tecnico1@tecnico1.com'),
+(2, 'tecnico2', '4321', 'tecnico2@tecnico2.com');
 
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`admin_id`),
+  ADD UNIQUE KEY `admin_mail` (`admin_mail`);
+
+--
+-- Indices de la tabla `clients`
+--
+ALTER TABLE `clients`
+  ADD PRIMARY KEY (`client_id`),
+  ADD UNIQUE KEY `client_mail` (`client_mail`);
+
+--
+-- Indices de la tabla `packs`
+--
+ALTER TABLE `packs`
+  ADD PRIMARY KEY (`pack_id`);
+
+--
+-- Indices de la tabla `tasks`
+--
+ALTER TABLE `tasks`
+  ADD PRIMARY KEY (`task_id`);
+
+--
+-- Indices de la tabla `technicians`
+--
+ALTER TABLE `technicians`
+  ADD PRIMARY KEY (`tech_id`),
+  ADD UNIQUE KEY `tech_mail` (`tech_mail`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `admins`
+--
+ALTER TABLE `admins`
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT de la tabla `clients`
+--
+ALTER TABLE `clients`
+  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT de la tabla `packs`
+--
+ALTER TABLE `packs`
+  MODIFY `pack_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT de la tabla `tasks`
+--
+ALTER TABLE `tasks`
+  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT de la tabla `technicians`
+--
+ALTER TABLE `technicians`
+  MODIFY `tech_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
