@@ -2,6 +2,7 @@
 namespace TaskManager\Controller;
 use TaskManager\Model\Admin;
 use TaskManager\Model\Client;
+use TaskManager\Model\Tech;
 use TaskManager\View\View;
 
 
@@ -99,6 +100,39 @@ class AdminController
 		$view = new View('templates/');
 		Client::deleteClient($id);
 		header('Location:../listClient/');
+	}
+
+	public function listTech(){
+		
+		$view = new View('templates/tech');
+		$listTechs = Tech::listTech();
+		$view->render('list.php', ['techs' => $listTechs, 'pageTitle'=>"Listado de técnicos"]);
+
+	}
+
+	public function showTech($id){
+		$view = new View('templates/tech');
+		$tech = Tech::getTechById($id);
+		$view->render('show.php', ['tech' => $tech]);
+	}
+
+	public function addTech(){
+		if(empty($_POST)){
+			$view = new View('templates/tech');
+			$view->render('add.php', []);
+		}
+		else{
+			
+			Tech::addTech($_POST['name'], $_POST['password'], $_POST['mail']);
+			$_POST = "";
+			header('Location:../');
+		}
+
+	}
+	public function deleteTech($id){
+		$view = new View('templates/');
+		Tech::deleteTech($id);
+		header('Location:../listTech/');
 	}
 }
 
