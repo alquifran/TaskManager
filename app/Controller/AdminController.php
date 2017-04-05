@@ -1,6 +1,7 @@
 <?php
 namespace TaskManager\Controller;
 use TaskManager\Model\Admin;
+use TaskManager\Model\Client;
 use TaskManager\View\View;
 
 
@@ -25,6 +26,7 @@ class AdminController
 			header('location:../login/');
 		}
 	}
+
 	public function login(){
 		session_start();
 		
@@ -49,6 +51,20 @@ class AdminController
 		}
 		$view = new View('templates/admin');
 		$view->render('login.php', ['pageTitle' => 'Login admin']);
+	}
+
+	public function addClient(){
+		if(empty($_POST)){
+			$view = new View('templates/client');
+			$view->render('add.php', []);
+		}
+		else{
+			
+			Client::addClient($_POST['name'], $_POST['password'], $_POST['mail']);
+			$_POST = "";
+			header('Location:../');
+		}
+
 	}
 }
 
