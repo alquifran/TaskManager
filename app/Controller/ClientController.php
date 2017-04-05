@@ -25,6 +25,12 @@ class ClientController
 			header('location:../login/');
 		}
 	}
+
+	public function addPrueba(){
+		Client::addClient("Ola","bla","ola@ola.com");
+
+	}
+
 	public function login(){
 		session_start();
 		
