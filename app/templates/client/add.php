@@ -11,4 +11,4 @@
 	<input type="submit" value="Crear cliente">
 </form>
 <br>
-<a href='../profile'><button>Volver al listado</button></a>
+<a href='../'><button>Volver</button></a>

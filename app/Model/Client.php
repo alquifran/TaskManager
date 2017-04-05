@@ -98,7 +98,24 @@ class Client
 
 	}
 
-
+	public static function updateClient($id, $name, $password, $mail){
+		$db = Database::getInstance();
+		if($password == ""){
+			$req = $db->prepare('UPDATE clients 
+			SET client_name = :name, client_mail = :mail WHERE client_id = :id');
+			$req->execute(array('id' => $id, 'name' => $name,
+			'mail' => $mail));
+		}
+		else{
+			//En caso de que la contraseña cambie.
+		}
+	}
+	public static function deleteClient($id){
+		$db = Database::getInstance();
+		$id = intval($id);
+		$req = $db->prepare('DELETE FROM clients WHERE client_id = :id');
+		$req->execute(array('id' => $id));
+	}
 
 	function getName(){
 		return $this->name;

@@ -86,13 +86,19 @@ class AdminController
 		if(empty($_POST)){
 			$view = new View('templates/client');
 			$client = Client::getClientById($id);
-			$view->render('updateClient.php', ['client' => $client]);
+			$view->render('update.php', ['client' => $client]);
 		}
 		else{
 			Client::updateClient($id, $_POST['name'], $_POST['password'], $_POST['mail']);
 			$_POST = "";
 			header('Location:../');
 		}
+	}
+
+	public function deleteClient($id){
+		$view = new View('templates/');
+		Client::deleteClient($id);
+		header('Location:../listClient/');
 	}
 }
 
