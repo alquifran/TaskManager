@@ -74,5 +74,25 @@ class AdminController
 		$view->render('list.php', ['clients' => $listClients, 'pageTitle'=>"Listado de clientes"]);
 
 	}
+
+	public function showClient($id){
+		$view = new View('templates/client');
+		$client = Client::getClientById($id);
+		$view->render('show.php', ['client' => $client]);
+	}
+
+	public function updateClient($id){
+		// if(checkLogin($_POST));
+		if(empty($_POST)){
+			$view = new View('templates/client');
+			$client = Client::getClientById($id);
+			$view->render('updateClient.php', ['client' => $client]);
+		}
+		else{
+			Client::updateClient($id, $_POST['name'], $_POST['password'], $_POST['mail']);
+			$_POST = "";
+			header('Location:../');
+		}
+	}
 }
 

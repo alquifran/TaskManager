@@ -2,7 +2,8 @@
 <ul>
 	<?php foreach ($clients as $client): ?>
 		<li>
-		<?= $client->getName(); ?>	
+		<a href='../showClient/<?= $client->getId(); ?>'><?= $client->getName(); ?></a>
+			
 		</li>
 	<?php endforeach ?>
 </ul>

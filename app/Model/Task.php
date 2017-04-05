@@ -8,7 +8,7 @@ class Task
 {
 	private $id;
 	private $name;
-	private $description
+	private $description;
 
 	function __construct($name="",$description="",$id=null){
 		$this->id = $id;
@@ -29,6 +29,8 @@ class Task
 		return $list;
 
 	}
+
+
 	
 	function getName(){
 		return $this->name;
@@ -37,5 +39,7 @@ class Task
 	function setName($name){
 		$this->name = $name;
 	}
+
+
 
 }
