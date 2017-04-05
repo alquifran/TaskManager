@@ -4,9 +4,7 @@ namespace TaskManager\Controller;
 class PageController{
 
 	public function index(){
-		echo "<a href=Client/>Client</a>";
+		echo "<a href=Client/Login/>Client</a>";
 	}
-	public function aaa(){
-		echo "aaa";
-	}
+	
 }
