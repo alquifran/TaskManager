@@ -98,6 +98,8 @@ class Client
 
 	}
 
+
+
 	function getName(){
 		return $this->name;
 	}
@@ -114,4 +116,9 @@ class Client
 		$this->mail = $mail;
 	}
 
+	function getId(){
+		return $this->id;
+	}
+
+	
 }
