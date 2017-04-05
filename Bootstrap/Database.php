@@ -1,6 +1,6 @@
 <?php
 namespace TaskManager\Bootstrap;
-//use \PDO;
+use \PDO;
 include 'Config.php';
 class Database
 {
