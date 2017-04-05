@@ -87,6 +87,17 @@ class Client
 		}
 	}
 
+	public static function addClient($name,$password,$mail){
+		
+		$db = Database::getInstance();
+		$req = $db->prepare('INSERT INTO clients 
+			(client_name,client_password,client_mail)
+			VALUES (:name, :password, :mail )');
+		$req->execute(array('name' => $name, 'password' => $password,
+			'mail' => $mail ));
+
+	}
+
 	function getName(){
 		return $this->name;
 	}
