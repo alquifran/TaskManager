@@ -5,4 +5,5 @@ Hola admin <?=$admin->getName();?><br>
 		<input type="submit" name="logout" value="Cerrar sesión">
 	</form>
 	<a href="../addClient/">Add Client</a>
+	<a href="../listClient/">Client List</a>
 	<?php //include '../task/list.php';?> 
