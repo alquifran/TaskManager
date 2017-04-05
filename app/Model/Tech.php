@@ -38,6 +38,17 @@ class Tech
 
 	}
 
+	public static function getTechById($id){
+		$db = Database::getInstance();
+		$req = $db->query("
+			SELECT * 
+			FROM technicians
+			WHERE tech_id = '$id'");
+		$tech = $req->fetch();
+		return new Tech($tech['tech_id'], $tech['tech_name'], $tech['tech_mail'], $tech['tech_password']);
+
+	}
+
 	public static function isTech($mail){
 		$db = Database::getInstance();
 		$req = $db->query("
@@ -64,6 +75,53 @@ class Tech
 		else{
 			return false;
 		}
+	}
+
+	public static function listTech(){
+		$list = [];
+		$db = Database::getInstance();
+		$req = $db->query('SELECT * FROM technicians');
+		foreach($req->fetchAll() as $tech){
+			$list[] = new Tech($tech['tech_id'], $tech['tech_name'], $tech['tech_mail'], $tech['tech_password']);
+	
+		}
+
+		return $list;
+
+	}
+
+	public static function addTech($name,$password,$mail){
+		
+		$db = Database::getInstance();
+		$req = $db->prepare('INSERT INTO technicians 
+			(tech_name,tech_password,tech_mail)
+			VALUES (:name, :password, :mail )');
+		$req->execute(array('name' => $name, 'password' => $password,
+			'mail' => $mail ));
+
+	}
+	public static function updateTech($id, $name, $password, $mail){
+		$db = Database::getInstance();
+		if($password == ""){
+			$req = $db->prepare('UPDATE technicians 
+			SET tech_name = :name, tech_mail = :mail WHERE tech_id = :id');
+			$req->execute(array('id' => $id, 'name' => $name,
+			'mail' => $mail));
+		}
+		else{
+			//En caso de que la contraseña cambie.
+		}
+	}
+
+	public static function deleteTech($id){
+		$db = Database::getInstance();
+		$id = intval($id);
+		$req = $db->prepare('DELETE FROM technicians WHERE tech_id = :id');
+		$req->execute(array('id' => $id));
+	}
+
+	function getId(){
+		return $this->id;
 	}
 
 	function getName(){
