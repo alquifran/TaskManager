@@ -66,5 +66,13 @@ class AdminController
 		}
 
 	}
+
+	public function listClient(){
+		
+		$view = new View('templates/client');
+		$listClients = Client::listClient();
+		$view->render('list.php', ['clients' => $listClients, 'pageTitle'=>"Listado de clientes"]);
+
+	}
 }
 
