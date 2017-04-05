@@ -27,8 +27,7 @@ class ClientController
 	}
 	public function login(){
 		session_start();
-		$view = new View('templates/client');
-			$view->render('login.php', ['pageTitle' => 'Login client']);
+		
 		//Comprobamos si el cliente ha introducido datos.
 		if(isset($_SESSION['mail'])){
 			header('location:../profile/');
@@ -48,6 +47,8 @@ class ClientController
 				}
 			}
 		}
+		$view = new View('templates/client');
+		$view->render('login.php', ['pageTitle' => 'Login client']);
 	}
 }
 
