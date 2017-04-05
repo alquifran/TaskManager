@@ -4,7 +4,7 @@
 
 
 <p>
-<a href='../'><button>Volver al listado</button></a>
+<a href='../listClient/'><button>Volver al listado</button></a>
 <a href='../updateClient/<?= $client->getId(); ?>'><button>Modificar</button></a>
 <a href='../deleteClient/<?= $client->getId(); ?>'><button>Eliminar</button>
 </a>
