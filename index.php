@@ -13,7 +13,7 @@ else{
 }
 // construimos el nombre completo del controlador
 $controller = ucfirst($controller) . 'Controller';
-$controller = 'TaskManager\\'. $controller;
+$controller = 'TaskManager\Controller\\'. $controller;
 // obtenemos el parámetro o asignamos un valor por defecto
 //$action = $request->getParam('action') ?? 'index';
 if($request->hasParam('action')){
