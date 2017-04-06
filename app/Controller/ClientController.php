@@ -2,6 +2,7 @@
 namespace TaskManager\Controller;
 use TaskManager\Model\Client;
 use TaskManager\View\View;
+use TaskManager\Model\Pack;
 
 
 class ClientController
@@ -17,8 +18,9 @@ class ClientController
 			$view = new View('templates/client');
 			//echo "Soy un cliente";
 			$client = Client::getClientByMail($_SESSION['mail']);
+			$packs = Pack::listPacks();
 			
-			$view->render('profile.php', ['client' => $client, 'pageTitle' => $client->getName() . "'s profile"]);
+			$view->render('profile.php', ['client' => $client, 'pageTitle' => $client->getName() . "'s profile", 'packs' => $packs]);
 		}
 		else{
 			session_destroy();
