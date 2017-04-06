@@ -10,18 +10,21 @@ class Tech
 	private $password;
 	private $mail;
 	private $id;
+	private $alta;
 
 
 	function __construct(
 		$id=null,
 		$name = "",
 		$mail = "",
-		$password = "")
+		$password = "",
+		$alta ="")
 	{
 		$this->id=$id;
 		$this->name = $name;
 		$this->mail = $mail;
 		$this->password=$password;
+		$this->alta = $alta;
 
 	}
 
@@ -34,7 +37,7 @@ class Tech
 			FROM technicians
 			WHERE tech_mail = '$mail'");
 		$tech = $req->fetch();
-		return new Tech($tech['tech_id'], $tech['tech_name'], $tech['tech_mail'], $tech['tech_password']);
+		return new Tech($tech['tech_id'], $tech['tech_name'], $tech['tech_mail'], $tech['tech_password'], $tech['tech_alta']);
 
 	}
 
@@ -45,7 +48,7 @@ class Tech
 			FROM technicians
 			WHERE tech_id = '$id'");
 		$tech = $req->fetch();
-		return new Tech($tech['tech_id'], $tech['tech_name'], $tech['tech_mail'], $tech['tech_password']);
+		return new Tech($tech['tech_id'], $tech['tech_name'], $tech['tech_mail'], $tech['tech_password'], $tech['tech_alta']);
 
 	}
 
@@ -82,7 +85,7 @@ class Tech
 		$db = Database::getInstance();
 		$req = $db->query('SELECT * FROM technicians');
 		foreach($req->fetchAll() as $tech){
-			$list[] = new Tech($tech['tech_id'], $tech['tech_name'], $tech['tech_mail'], $tech['tech_password']);
+			$list[] = new Tech($tech['tech_id'], $tech['tech_name'], $tech['tech_mail'], $tech['tech_password'], $tech['tech_alta']);
 	
 		}
 
@@ -100,13 +103,13 @@ class Tech
 			'mail' => $mail ));
 
 	}
-	public static function updateTech($id, $name, $password, $mail){
+	public static function updateTech($id, $name, $password, $mail, $alta){
 		$db = Database::getInstance();
 		if($password == ""){
 			$req = $db->prepare('UPDATE technicians 
-			SET tech_name = :name, tech_mail = :mail WHERE tech_id = :id');
+			SET tech_name = :name, tech_mail = :mail, tech_alta = :alta WHERE tech_id = :id');
 			$req->execute(array('id' => $id, 'name' => $name,
-			'mail' => $mail));
+			'mail' => $mail, 'alta' => $alta));
 		}
 		else{
 			//En caso de que la contraseña cambie.
@@ -138,6 +141,15 @@ class Tech
 
 	function setMail($mail){
 		$this->mail = $mail;
+	}
+
+	function getAlta(){
+		if($this->alta == 1){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 }

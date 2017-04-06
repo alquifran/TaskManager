@@ -93,7 +93,10 @@ class AdminController
 			if(isset($_POST['alta']) && ($_POST['alta'] == 1)){
 				$alta = 1;
 			}
-			Client::updateClient($id, $_POST['name'], $_POST['password'], $_POST['mail']);
+			else{
+				$alta = 0;
+			}
+			Client::updateClient($id, $_POST['name'], $_POST['password'], $_POST['mail'], $alta);
 			$_POST = "";
 			header('Location:../');
 		}
@@ -136,6 +139,26 @@ class AdminController
 		$view = new View('templates/');
 		Tech::deleteTech($id);
 		header('Location:../listTech/');
+	}
+
+	public function updateTech($id){
+		// if(checkLogin($_POST));
+		if(empty($_POST)){
+			$view = new View('templates/tech');
+			$tech = Tech::getTechById($id);
+			$view->render('update.php', ['tech' => $tech]);
+		}
+		else{
+			if(isset($_POST['alta']) && ($_POST['alta'] == 1)){
+				$alta = 1;
+			}
+			else{
+				$alta = 0;
+			}
+			Tech::updateTech($id, $_POST['name'], $_POST['password'], $_POST['mail'], $alta);
+			$_POST = "";
+			header('Location:../');
+		}
 	}
 }
 
