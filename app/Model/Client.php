@@ -10,18 +10,21 @@ class Client
 	private $password;
 	private $mail;
 	private $id;
+	private $alta;
 
 
 	function __construct(
 		$id=null,
 		$name = "",
 		$mail = "",
-		$password = "")
+		$password = "",
+		$alta = "")
 	{
 		$this->id=$id;
 		$this->name = $name;
 		$this->mail = $mail;
 		$this->password=$password;
+		$this->alta = $alta;
 
 	}
 	public static function listClient(){
@@ -29,7 +32,7 @@ class Client
 		$db = Database::getInstance();
 		$req = $db->query('SELECT * FROM clients');
 		foreach($req->fetchAll() as $client){
-			$list[] = new Client($client['client_id'], $client['client_name'], $client['client_password']);
+			$list[] = new Client($client['client_id'], $client['client_name'], $client['client_password'], $client['client_alta']);
 	
 		}
 
@@ -44,7 +47,7 @@ class Client
 			FROM clients 
 			WHERE client_id = '$id'");
 		$client = $req->fetch();
-		return new Client($client['client_id'], $client['client_name'], $client['client_mail'], $client['client_password']);
+		return new Client($client['client_id'], $client['client_name'], $client['client_mail'], $client['client_password'], $client['client_alta']);
 
 	}
 
@@ -55,7 +58,7 @@ class Client
 			FROM clients 
 			WHERE client_mail = '$mail'");
 		$client = $req->fetch();
-		return new Client($client['client_id'], $client['client_name'], $client['client_mail'], $client['client_password']);
+		return new Client($client['client_id'], $client['client_name'], $client['client_mail'], $client['client_password'], $client['client_alta']);
 
 	}
 
@@ -98,13 +101,13 @@ class Client
 
 	}
 
-	public static function updateClient($id, $name, $password, $mail){
+	public static function updateClient($id, $name, $password, $mail, $alta){
 		$db = Database::getInstance();
 		if($password == ""){
 			$req = $db->prepare('UPDATE clients 
-			SET client_name = :name, client_mail = :mail WHERE client_id = :id');
+			SET client_name = :name, client_mail = :mail, client_alta = :alta WHERE client_id = :id');
 			$req->execute(array('id' => $id, 'name' => $name,
-			'mail' => $mail));
+			'mail' => $mail, 'alta' => $alta));
 		}
 		else{
 			//En caso de que la contraseña cambie.
@@ -135,6 +138,15 @@ class Client
 
 	function getId(){
 		return $this->id;
+	}
+
+	function getAlta(){
+		if($this->alta == 1){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	

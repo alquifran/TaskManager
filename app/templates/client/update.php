@@ -8,10 +8,11 @@
 	<label for="email">Email</label>
     <input type="email" name="mail"
     value="<?= $client->getMail() ?>"><br>
+    Alta: <input type="checkbox" value="1" name="alta" <?php if($client->getAlta()){echo 'checked';}?>><br>
 	<input type="submit" value="Modificar cliente">
 </form>
 <br>
-<a href='../profile'><button>Volver al listado</button></a>
+<a href='../profile/'><button>Volver al listado</button></a>
 <br>
 <a href='../showClient/<?= $client->getClientById() ?>'><button>Cancelar</button></a>
 <a href='../'><button>Volver al listado de clientes</button></a>

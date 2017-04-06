@@ -90,6 +90,9 @@ class AdminController
 			$view->render('update.php', ['client' => $client]);
 		}
 		else{
+			if(isset($_POST['alta']) && ($_POST['alta'] == 1)){
+				$alta = 1;
+			}
 			Client::updateClient($id, $_POST['name'], $_POST['password'], $_POST['mail']);
 			$_POST = "";
 			header('Location:../');
