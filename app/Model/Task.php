@@ -54,6 +54,80 @@ class Task
 
 	}
 
+	// FILTROS de tareas
+	// Por cliente
+	public static function listTasksByClientId($id){
+		$db = Database::getInstance();
+		$req = $db->query("
+			SELECT *
+			FROM tasks WHERE client_id = $id"
+			);
+		$tasks = $req->fetchAll();
+		foreach ($tasks as $task) {
+				$list[] =new Task(
+								$task['task_name'],
+								$task['task_description'],
+								$task['client_id'],
+								$task['tech_id'],
+								$task['task_date_start'],
+								$task['task_date_end'],
+								$task['status_id'],
+								$task['task_time_seconds'],
+								$task['task_id']);
+		}
+		return $list;
+
+	}
+
+	// Por tecnico
+	public static function listTasksByTechId($id){
+		$db = Database::getInstance();
+		$req = $db->query("
+			SELECT *
+			FROM tasks WHERE tech_id = $id"
+			);
+		$tasks = $req->fetchAll();
+		foreach ($tasks as $task) {
+				$list[] =new Task(
+								$task['task_name'],
+								$task['task_description'],
+								$task['client_id'],
+								$task['tech_id'],
+								$task['task_date_start'],
+								$task['task_date_end'],
+								$task['status_id'],
+								$task['task_time_seconds'],
+								$task['task_id']);
+		}
+		return $list;
+	}
+
+	// Por estado
+	public static function listTasksByStatusId($id){
+		$db = Database::getInstance();
+		$req = $db->query("
+			SELECT *
+			FROM tasks WHERE status_id = $id"
+			);
+		$tasks = $req->fetchAll();
+		foreach ($tasks as $task) {
+				$list[] =new Task(
+								$task['task_name'],
+								$task['task_description'],
+								$task['client_id'],
+								$task['tech_id'],
+								$task['task_date_start'],
+								$task['task_date_end'],
+								$task['status_id'],
+								$task['task_time_seconds'],
+								$task['task_id']);
+		}
+		return $list;
+	}
+
+
+	//FIN FILTROS
+
 	public static function getTaskById($id){
 		$db = Database::getInstance();
 		$req = $db->query("
