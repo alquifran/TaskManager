@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-04-2017 a las 09:31:56
+-- Tiempo de generación: 06-04-2017 a las 10:00:04
 -- Versión del servidor: 10.1.19-MariaDB
 -- Versión de PHP: 7.0.13
 
@@ -170,7 +170,9 @@ ALTER TABLE `packs`
 -- Indices de la tabla `tasks`
 --
 ALTER TABLE `tasks`
-  ADD PRIMARY KEY (`task_id`);
+  ADD PRIMARY KEY (`task_id`),
+  ADD KEY `task_clients_id_idx` (`client_id`),
+  ADD KEY `task_techs_id_idx` (`tech_id`);
 
 --
 -- Indices de la tabla `technicians`
@@ -208,6 +210,17 @@ ALTER TABLE `tasks`
 --
 ALTER TABLE `technicians`
   MODIFY `tech_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `tasks`
+--
+ALTER TABLE `tasks`
+  ADD CONSTRAINT `task_clients_id` FOREIGN KEY (`client_id`) REFERENCES `clients` (`client_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `task_techs_id` FOREIGN KEY (`tech_id`) REFERENCES `technicians` (`tech_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
