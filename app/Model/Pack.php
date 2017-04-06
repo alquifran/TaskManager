@@ -34,7 +34,29 @@ class Pack
 		return $list;
 	}
 
+	public static function packByClientId($client_id){
+		$db = Database::getInstance();
+		$req = $db->query("
+			SELECT * FROM `clients` 
+			JOIN `client_pack` 
+			ON `clients`.`client_id` = `client_pack`.`client_id` 
+			JOIN `packs` 
+			ON `client_pack`.`pack_id` = `packs`.`pack_id` 
+			WHERE `clients`.`client_id` = '$client_id'");
+		
+
+		if($req->rowCount()!=0){
+			$pack = $req->fetch();
+			return new Pack($pack['pack_name'], $pack['pack_desc'], $pack['pack_time'], $pack['pack_id']);
+		}
+		else{
+			return null;
+		}
+	}
+
 	public function getName(){
 		return $this->name;
 	}
+
+
 }
