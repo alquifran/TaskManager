@@ -167,7 +167,7 @@ class Task
 
 	}
 
-	public static function addTask($name,$description,$client_id=null,$tech_id=null,$status=1){
+	public static function addTask($name,$description,$client_id=null,$tech_id=null,$status=0){
 
 		$db = Database::getInstance();
 		$req = $db->prepare('INSERT INTO tasks
@@ -317,6 +317,8 @@ class Task
 				break;
 		}
 	}
+
+
 	function getworkTime(){
 		return $this->start;
 	}
