@@ -21,7 +21,7 @@
 		<?php foreach ($tasks as $task):?>
 			<tr>
 				<td>
-					<?=$task->getName();?>
+					<a href="../showTask/<?=$task->getId();?>"><?=$task->getName();?></a>
 				</td>
 				<td>
 					<a href="../showClient/<?=$task->getClientId()?>" target="_blank"><?=$task->getClient()->getName();?></a>
