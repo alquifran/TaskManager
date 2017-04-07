@@ -16,7 +16,7 @@ class Task
 	private $start;
 	private $ending;
 	private $status;
-	// ¿private $status = [1,2,3];?
+	// ¿private $status = [0,1,2];?
 	private $workTime;
 
 	function __construct($name="",$description="",$client_id="",$tech_id="",$start="",$ending="",$status="",$workTime="",$id=null){
@@ -62,8 +62,11 @@ class Task
 			SELECT *
 			FROM tasks WHERE client_id = $id"
 			);
-		$tasks = $req->fetchAll();
-		foreach ($tasks as $task) {
+
+		if($req->rowCount()!=0){
+
+			$tasks = $req->fetchAll();
+			foreach ($tasks as $task){
 				$list[] =new Task(
 								$task['task_name'],
 								$task['task_description'],
@@ -74,9 +77,12 @@ class Task
 								$task['status_id'],
 								$task['task_time_seconds'],
 								$task['task_id']);
-		}
-		return $list;
+			}
+			return $list;
+		}else{
 
+			return null;
+		}
 	}
 
 	// Por tecnico
@@ -86,8 +92,11 @@ class Task
 			SELECT *
 			FROM tasks WHERE tech_id = $id"
 			);
-		$tasks = $req->fetchAll();
-		foreach ($tasks as $task) {
+
+		if($req->rowCount()!=0){
+
+			$tasks = $req->fetchAll();
+			foreach ($tasks as $task){
 				$list[] =new Task(
 								$task['task_name'],
 								$task['task_description'],
@@ -98,8 +107,12 @@ class Task
 								$task['status_id'],
 								$task['task_time_seconds'],
 								$task['task_id']);
+			}
+			return $list;
+		}else{
+
+			return null;
 		}
-		return $list;
 	}
 
 	// Por estado
@@ -109,8 +122,10 @@ class Task
 			SELECT *
 			FROM tasks WHERE status_id = $id"
 			);
-		$tasks = $req->fetchAll();
-		foreach ($tasks as $task) {
+		if($req->rowCount()!=0){
+
+			$tasks = $req->fetchAll();
+			foreach ($tasks as $task){
 				$list[] =new Task(
 								$task['task_name'],
 								$task['task_description'],
@@ -121,8 +136,12 @@ class Task
 								$task['status_id'],
 								$task['task_time_seconds'],
 								$task['task_id']);
+			}
+			return $list;
+		}else{
+
+			return null;
 		}
-		return $list;
 	}
 
 
@@ -148,7 +167,7 @@ class Task
 
 	}
 
-	public static function addTask($name,$description,$client_id="",$tech_id="",$status=1){
+	public static function addTask($name,$description,$client_id=null,$tech_id=null,$status=1){
 
 		$db = Database::getInstance();
 		$req = $db->prepare('INSERT INTO tasks
@@ -223,23 +242,37 @@ class Task
 		$this->description = $description;
 	}
 
-	function getClient(){
+	function getClientByName(){
 		$client=Client::getClientById($this->client_id);
 		return $client->getName();
 	}
 
-	function setClient($client){
+	function getClientId(){
+		return $this->client_id;
+	}
+
+	function setClientId($client){
 		$this->client_id = $client;
+	}
+
+	function getClient(){
+		$client=Client::getClientById($this->client_id);
+		return $client;
 	}
 
 	function getTech(){
 		$tech=Tech::getTechById($this->tech_id);
-		return $tech->getName();
+		return $tech;
 	}
 
-	function setTech($tech){
+	function setTechId($tech){
 		$this->tech_id = $tech;
 	}
+
+	function getTechId(){
+		return $this->tech_id;
+	}
+
 
 	function getStart(){
 		return $this->start;
@@ -265,6 +298,25 @@ class Task
 		$this->status = $status;
 	}
 
+	function getStatusText(){
+		switch ($this->status) {
+			case 0:
+				return "Por empezar";
+				break;
+			
+			case 1:
+				return "Haciéndose";
+				break;
+
+			case 2:
+				return "Terminada";
+				break;
+
+			default:
+				return "Desconocido";
+				break;
+		}
+	}
 	function getworkTime(){
 		return $this->start;
 	}
