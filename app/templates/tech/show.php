@@ -12,7 +12,7 @@
 	echo "<h2>Estado: Alta</h2>";
 	} ?>
 <p>
-<a href='../listTech/'><button>Volver al listado</button></a>
+<a href='../listTech/'><button>Ir al listado de técnicos</button></a>
 <a href='../updateTech/<?= $tech->getId(); ?>'><button>Modificar</button></a>
 <a href='../deleteTech/<?= $tech->getId(); ?>'><button>Eliminar</button>
 </a>
