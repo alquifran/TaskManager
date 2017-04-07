@@ -3,6 +3,7 @@ namespace TaskManager\Controller;
 use TaskManager\Model\Admin;
 use TaskManager\Model\Client;
 use TaskManager\Model\Tech;
+use TaskManager\Model\Task;
 use TaskManager\View\View;
 
 
@@ -53,6 +54,12 @@ class AdminController
 		$view = new View('templates/admin');
 		$view->render('login.php', ['pageTitle' => 'Login admin']);
 	}
+
+	////////////////////////////////////////////////////////////////////////////
+	//--------------------------------------------------------------------------
+	//Funciones relacionadas con clientes
+	//--------------------------------------------------------------------------
+	////////////////////////////////////////////////////////////////////////////
 
 	public function addClient(){
 		if(empty($_POST)){
@@ -108,6 +115,13 @@ class AdminController
 		header('Location:../listClient/');
 	}
 
+	////////////////////////////////////////////////////////////////////////////
+	//--------------------------------------------------------------------------
+	//Funciones relacionadas con técnicos
+	//--------------------------------------------------------------------------
+	////////////////////////////////////////////////////////////////////////////
+
+
 	public function listTech(){
 		
 		$view = new View('templates/tech');
@@ -159,6 +173,39 @@ class AdminController
 			$_POST = "";
 			header('Location:../');
 		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	//--------------------------------------------------------------------------
+	//Funciones relacionadas con tareas
+	//--------------------------------------------------------------------------
+	////////////////////////////////////////////////////////////////////////////
+
+
+	public function addTask(){
+		if(empty($_POST)){
+			$view = new View('templates/task');
+			$clients = Client::listClient();
+			$techs = Tech::listTech();
+			$view->render('add.php', ['clients' => $clients, 'techs' => $techs, 'pageTitle' => 'Crear tarea']);
+		}
+		else{
+			if($_POST['client_id'] == ""){
+				$_POST['client_id'] = null;
+			}
+			if($_POST['tech_id'] == ""){
+				$_POST['tech_id'] = null;
+			}
+			Task::addTask($_POST['name'], $_POST['desc'], $_POST['client_id'], $_POST['tech_id']);
+			$_POST = "";
+			header('Location:../');
+		}
+	}
+
+	public function listTask(){
+		$view = new View('templates/task');
+		$tasks = Task::listTasks();
+		$view->render('list.php', ['pageTitle'=>'Lista de tareas', 'tasks' => $tasks]);
 	}
 }
 
