@@ -19,7 +19,7 @@ class ClientController
 			//echo "Soy un cliente";
 			$client = Client::getClientByMail($_SESSION['mail']);
 			$pack = Pack::packByClientId($client->getId());
-			
+
 			$view->render('profile.php', ['client' => $client, 'pageTitle' => $client->getName() . "'s profile", 'pack' => $pack]);
 		}
 		else{
@@ -28,11 +28,11 @@ class ClientController
 		}
 	}
 
-	
+
 
 	public function login(){
 		session_start();
-		
+
 		//Comprobamos si el cliente ha introducido datos.
 		if(isset($_SESSION['mail'])){
 			header('location:../profile/');
@@ -44,7 +44,7 @@ class ClientController
 			if(Client::isClient($_POST['mail'])){
 				//Comprobamos si la contraseña coincide.
 				if(Client::checkPassword($_POST['mail'], $_POST['password'])){
-					
+
 					$_SESSION['user_type'] = 'client';
 					$_SESSION['mail'] = $_POST['mail'];
 					header('Location:../profile/');
@@ -52,11 +52,24 @@ class ClientController
 				}
 			}
 		}
+
 		$view = new View('templates/client');
 		$view->render('login.php', ['pageTitle' => 'Login client']);
 	}
 
-	public function pack(){
+	public function listPacks(){
+		$packs = Pack::listPacks();
+		$view = new View('templates/pack');
+		$view->render('list.php', ['packs' => $packs]);
+	}
+
+	public function addPack(){
+		session_start();
+		$pack = Pack::PackById($_POST['pack']);
+		$client_id = Client::getClientByMail($_SESSION['mail'])->getId();
+		$pack_id = $pack->getId();
+		Pack::contractPack($pack_id,$client_id);
+		header('location:profile/');
 
 	}
 }
