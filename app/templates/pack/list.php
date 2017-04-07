@@ -1,5 +1,5 @@
 <h1>Listado de packs</h1>
-<form method="POST" action="addPack">
+<form method="POST" action="../addPack/">
     <?php foreach ($packs as $pack): ?>
         <input type="radio" name="pack" value="<?= $pack->getId(); ?>">
         <?= $pack->getName(); ?>

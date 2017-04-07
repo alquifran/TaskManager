@@ -22,7 +22,7 @@ Hola cliente <?=$client->getName();?><br>
 <br>
 <br>
 <br>
-<form method="POST" action="listPacks">
+<form method="POST" action="../listPacks/">
 	<input type="submit" name="packs" value="Contratar Pack">
 </form>
 <form method="POST">

@@ -69,7 +69,7 @@ class ClientController
 		$client_id = Client::getClientByMail($_SESSION['mail'])->getId();
 		$pack_id = $pack->getId();
 		Pack::contractPack($pack_id,$client_id);
-		header('location:profile/');
+		header('location:../profile/');
 
 	}
 }
