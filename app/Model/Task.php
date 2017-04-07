@@ -167,7 +167,7 @@ class Task
 
 	}
 
-	public static function addTask($name,$description,$client_id="",$tech_id="",$status=1){
+	public static function addTask($name,$description,$client_id=null,$tech_id=null,$status=1){
 
 		$db = Database::getInstance();
 		$req = $db->prepare('INSERT INTO tasks
