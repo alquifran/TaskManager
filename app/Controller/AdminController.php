@@ -207,5 +207,35 @@ class AdminController
 		$tasks = Task::listTasks();
 		$view->render('list.php', ['pageTitle'=>'Lista de tareas', 'tasks' => $tasks]);
 	}
+
+	public function showTask($id){
+		$view = new View('templates/task');
+		$task = Task::getTaskById($id);
+		$view->render('show.php', ['pageTitle'=>$task->getName(), 'task' => $task]);
+	}
+
+	public function deleteTask($id){
+
+		Task::deleteTask($id);
+		header('Location:../listTask/');
+	}
+
+	public function updateTask($id){
+		if(empty($_POST)){
+			$view = new View('templates/task');
+			$task = Task::getTaskById($id);
+			$techs = Tech::listTech();
+			$clients = Client::listClient();
+
+			$view->render('update.php', ['task' => $task, 'techs' => $techs, 'clients' => $clients]);
+		}
+		else{
+			
+			Task::updateTask($_POST['name'], $_POST['desc'], $_POST['client_id'], $_POST['tech_id'], $id);
+			$_POST = "";
+			header('Location:../');
+		}
+
+	}
 }
 
