@@ -5,11 +5,14 @@ Hola cliente <?=$client->getName();?><br>
 	<h2>Pack contratado actualmente: </h2>
 
 		<?php
-			if($pack == null){
-				echo "No hay pack contratado";
+			if($packs == null){
+				echo "No hay packs contratados";
 			}
 			else{
-				echo $pack->getName();
+				foreach ($packs as $pack) {
+					echo $pack->getName();
+					echo "<br>";
+				}
 			}
 
 		?>
