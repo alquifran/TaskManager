@@ -242,23 +242,37 @@ class Task
 		$this->description = $description;
 	}
 
-	function getClient(){
+	function getClientByName(){
 		$client=Client::getClientById($this->client_id);
 		return $client->getName();
 	}
 
-	function setClient($client){
+	function getClientId(){
+		return $this->client_id;
+	}
+
+	function setClientId($client){
 		$this->client_id = $client;
+	}
+
+	function getClient(){
+		$client=Client::getClientById($this->client_id);
+		return $client;
 	}
 
 	function getTech(){
 		$tech=Tech::getTechById($this->tech_id);
-		return $tech->getName();
+		return $tech;
 	}
 
-	function setTech($tech){
+	function setTechId($tech){
 		$this->tech_id = $tech;
 	}
+
+	function getTechId(){
+		return $this->tech_id;
+	}
+
 
 	function getStart(){
 		return $this->start;
