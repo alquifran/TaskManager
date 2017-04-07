@@ -16,7 +16,7 @@ class Task
 	private $start;
 	private $ending;
 	private $status;
-	// ¿private $status = [1,2,3];?
+	// ¿private $status = [0,1,2];?
 	private $workTime;
 
 	function __construct($name="",$description="",$client_id="",$tech_id="",$start="",$ending="",$status="",$workTime="",$id=null){
@@ -298,6 +298,25 @@ class Task
 		$this->status = $status;
 	}
 
+	function getStatusText(){
+		switch ($this->status) {
+			case 0:
+				return "Por empezar";
+				break;
+			
+			case 1:
+				return "Haciéndose";
+				break;
+
+			case 2:
+				return "Terminada";
+				break;
+
+			default:
+				return "Desconocido";
+				break;
+		}
+	}
 	function getworkTime(){
 		return $this->start;
 	}
