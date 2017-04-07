@@ -62,8 +62,11 @@ class Task
 			SELECT *
 			FROM tasks WHERE client_id = $id"
 			);
-		$tasks = $req->fetchAll();
-		foreach ($tasks as $task) {
+
+		if($req->rowCount()!=0){
+
+			$tasks = $req->fetchAll();
+			foreach ($tasks as $task){
 				$list[] =new Task(
 								$task['task_name'],
 								$task['task_description'],
@@ -74,9 +77,12 @@ class Task
 								$task['status_id'],
 								$task['task_time_seconds'],
 								$task['task_id']);
-		}
-		return $list;
+			}
+			return $list;
+		}else{
 
+			return null;
+		}
 	}
 
 	// Por tecnico
@@ -86,8 +92,11 @@ class Task
 			SELECT *
 			FROM tasks WHERE tech_id = $id"
 			);
-		$tasks = $req->fetchAll();
-		foreach ($tasks as $task) {
+
+		if($req->rowCount()!=0){
+
+			$tasks = $req->fetchAll();
+			foreach ($tasks as $task){
 				$list[] =new Task(
 								$task['task_name'],
 								$task['task_description'],
@@ -98,8 +107,12 @@ class Task
 								$task['status_id'],
 								$task['task_time_seconds'],
 								$task['task_id']);
+			}
+			return $list;
+		}else{
+
+			return null;
 		}
-		return $list;
 	}
 
 	// Por estado
@@ -109,8 +122,10 @@ class Task
 			SELECT *
 			FROM tasks WHERE status_id = $id"
 			);
-		$tasks = $req->fetchAll();
-		foreach ($tasks as $task) {
+		if($req->rowCount()!=0){
+
+			$tasks = $req->fetchAll();
+			foreach ($tasks as $task){
 				$list[] =new Task(
 								$task['task_name'],
 								$task['task_description'],
@@ -121,8 +136,12 @@ class Task
 								$task['status_id'],
 								$task['task_time_seconds'],
 								$task['task_id']);
+			}
+			return $list;
+		}else{
+
+			return null;
 		}
-		return $list;
 	}
 
 
