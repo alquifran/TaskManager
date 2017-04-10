@@ -4,3 +4,5 @@
         <input type="submit" name="submit">
 
     </form>
+
+<a href="../../">¿No eres un técnico?</a>
