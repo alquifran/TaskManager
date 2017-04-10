@@ -7,7 +7,8 @@ Cliente asignado: <a href="../showClient/<?=$task->getClientId()?>" target="_bla
 Técnico asignado: <a href="../showTech/<?=$task->getTechId()?>" target="_blank"><?=$task->getTech()->getName();?></a><br>
 
 Estado de la tarea: <?=$task->getStatusText()?>
+<br>
+<a href='../listTask/'><button>Ir al listado de tareas</button></a>
+<a href='../updateTask/<?= $task->getId(); ?>'><button>Modificar</button></a>
+<a href='../deleteTask/<?= $task->getId(); ?>'><button>Eliminar</button></a>
 
-<form action="../deleteTask/<?=$task->getId()?>" method="POST">
-	<input type="submit" name="submit" value="Eliminar tarea">
-</form>
