@@ -1,6 +1,8 @@
 <?php
 namespace TaskManager\Controller;
 use TaskManager\Model\Tech;
+use TaskManager\Model\Client;
+use TaskManager\Model\Task;
 use TaskManager\View\View;
 
 
@@ -49,6 +51,18 @@ class TechController
 		}
 		$view = new View('templates/tech');
 		$view->render('login.php', ['pageTitle' => 'Login tech']);
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	//--------------------------------------------------------------------------
+	//Funciones relacionadas con tareas
+	//--------------------------------------------------------------------------
+	////////////////////////////////////////////////////////////////////////////
+
+	public function listTask(){
+		$view = new View('templates/task');
+		$tasks = Task::listTasks();
+		$view->render('list.php', ['pageTitle'=>'Lista de tareas', 'tasks' => $tasks]);
 	}
 }
 

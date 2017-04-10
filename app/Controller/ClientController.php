@@ -18,9 +18,9 @@ class ClientController
 			$view = new View('templates/client');
 			//echo "Soy un cliente";
 			$client = Client::getClientByMail($_SESSION['mail']);
-			$pack = Pack::packByClientId($client->getId());
+			$packs = Pack::packsByClientId($client->getId());
 
-			$view->render('profile.php', ['client' => $client, 'pageTitle' => $client->getName() . "'s profile", 'pack' => $pack]);
+			$view->render('profile.php', ['client' => $client, 'pageTitle' => $client->getName() . "'s profile", 'packs' => $packs]);
 		}
 		else{
 			session_destroy();

@@ -167,7 +167,7 @@ class Task
 
 	}
 
-	public static function addTask($name,$description,$client_id=null,$tech_id=null,$status=1){
+	public static function addTask($name,$description,$client_id=null,$tech_id=null,$status=0){
 
 		$db = Database::getInstance();
 		$req = $db->prepare('INSERT INTO tasks
@@ -183,8 +183,8 @@ class Task
 		);
 
 	}
-
-	public static function updateTask($name,$description,$client_id,$tech_id,$start,$ending,$status,$workTime,$id){
+	//Esto hay que revisarlo sí o sí aaaaa
+	public static function updateTask($name,$description,$client_id,$tech_id,$id){
 		$db = Database::getInstance();
 
 		$req = $db->prepare('UPDATE tasks
@@ -192,11 +192,7 @@ class Task
 				task_name = :name,
 				task_description = :description,
 				client_id = :client_id,
-				tech_id = :tech_id,
-				task_date_start = :start,
-				task_date_end = :ending,
-				status_id = :status,
-				task_time_seconds = :workTime
+				tech_id = :tech_id
 			WHERE task_id = :id');
 
 			$req->execute(array(
@@ -204,10 +200,6 @@ class Task
 				'description' => $description,
 				'client_id' => $client_id,
 				'tech_id' => $tech_id,
-				'start' => $start,
-				'ending' => $ending,
-				'status' => $status,
-				'workTime' => $workTime,
 				'id' => $id
 				)
 			);
@@ -317,6 +309,8 @@ class Task
 				break;
 		}
 	}
+
+
 	function getworkTime(){
 		return $this->start;
 	}
