@@ -14,7 +14,7 @@ class TechController
 	}
 
 	public function profile(){
-		session_start();
+		
 		if(isset($_SESSION['mail']) && !isset($_POST['logout'])){
 			$view = new View('templates/tech');
 			//echo "Soy un tech";
@@ -28,7 +28,7 @@ class TechController
 		}
 	}
 	public function login(){
-		session_start();
+		
 		
 		//Comprobamos si el admin ha introducido datos.
 		if(isset($_SESSION['mail'])){
@@ -63,6 +63,26 @@ class TechController
 		$view = new View('templates/task');
 		$tasks = Task::listTasks();
 		$view->render('list.php', ['pageTitle'=>'Lista de tareas', 'tasks' => $tasks]);
+	}
+
+	public function addTask(){
+		if(empty($_POST)){
+			$view = new View('templates/task');
+			$clients = Client::listClient();
+			$techs = Tech::listTech();
+			$view->render('add.php', ['clients' => $clients, 'techs' => $techs, 'pageTitle' => 'Crear tarea']);
+		}
+		else{
+			if($_POST['client_id'] == ""){
+				$_POST['client_id'] = null;
+			}
+			if($_POST['tech_id'] == ""){
+				$_POST['tech_id'] = null;
+			}
+			Task::addTask($_POST['name'], $_POST['desc'], $_POST['client_id'], $_POST['tech_id']);
+			$_POST = "";
+			header('Location:../');
+		}
 	}
 }
 

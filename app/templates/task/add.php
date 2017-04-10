@@ -12,9 +12,16 @@ Crear tarea nueva:
 	Asignar a un técnico: <br>
 	<select name="tech_id">
 		<option value=""></option>
-		<?php foreach($techs as $tech): ?>
+		<?php foreach($techs as $tech): 
+			if($_SESSION['user_type'] == 'admin'){?>
+				<option value="<?=$tech->getId();?>"><?=$tech->getName();?></option>
+			
+		<?php }
+		else if($_SESSION['user_type'] == 'tech' && $tech->getMail() == $_SESSION['mail']){
+		?>
+
 			<option value="<?=$tech->getId();?>"><?=$tech->getName();?></option>
-		<?php endforeach;?>
+		<?php  } endforeach;?>
 	</select><br>
 
 	<input type="submit" name="submit">

@@ -18,7 +18,11 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php foreach ($tasks as $task):?>
+		<?php foreach ($tasks as $task):
+		if ($_SESSION['user_type'] == 'tech' && ($task->getTech()->getMail() == $_SESSION['mail']) || $task->getTechId() == null) {
+		?>
+			
+
 			<tr>
 				<td>
 					<a href="../showTask/<?=$task->getId();?>"><?=$task->getName();?></a>
@@ -33,7 +37,7 @@
 					<?=$task->getStatusText(); ?>
 				</td>
 			</tr>
-		<?php endforeach;?>
+		<?php } endforeach;?>
 	</tbody>
 </table>
 <br>
