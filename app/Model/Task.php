@@ -30,7 +30,45 @@ class Task
 		$this->status = $status;
 		$this->workTime = $workTime;
 	}
+// ----------------Paginación-----------------
+	public static function getTotalPage(){
+		$db = Database::getInstance();
+		$reg_in_page = 3;
+		$req = $db->query("
+			SELECT *
+			FROM tasks"
+			);
+		$row_num = $req->rowCount();
+		$total_page = ceil($row_num/$reg_in_page);
 
+		return $total_page;
+	}
+	public static function listPagedTasks($page){
+		$db = Database::getInstance();
+		$reg_in_page = 3;
+		$reg_init = ($page-1)*$reg_in_page;
+		$total_page = self::getTotalPage();
+
+		$req = $db->query("
+			SELECT *
+			FROM tasks LIMIT $reg_init,$reg_in_page"
+			);
+		$tasks = $req->fetchAll();
+		foreach ($tasks as $task) {
+				$list[] =new Task(
+								$task['task_name'],
+								$task['task_description'],
+								$task['client_id'],
+								$task['tech_id'],
+								$task['task_date_start'],
+								$task['task_date_end'],
+								$task['status_id'],
+								$task['task_time_seconds'],
+								$task['task_id']);
+		}
+		return $list;
+	}
+	// ----------------Fin de la paginación-------------
 	public static function listTasks(){
 		$db = Database::getInstance();
 		$req = $db->query("
@@ -295,7 +333,7 @@ class Task
 			case 0:
 				return "Por empezar";
 				break;
-			
+
 			case 1:
 				return "Haciéndose";
 				break;
