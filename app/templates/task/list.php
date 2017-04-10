@@ -36,5 +36,10 @@
 		<?php endforeach;?>
 	</tbody>
 </table>
+<!-- Paginación -->
+<?php for ($i=1; $i<=$reg; $i++): ?>
+			<a href="<?=$i?>"><?=$i?></a>
+<?php endfor; ?>
+<!-- Fin de la paginación -->
 <br>
 <a href="../profile/">Volver al perfil</a>
