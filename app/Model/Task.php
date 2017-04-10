@@ -186,6 +186,7 @@ class Task
 	//Esto hay que revisarlo sí o sí aaaaa
 	public static function updateTask($name,$description,$client_id,$tech_id,$id){
 		$db = Database::getInstance();
+		
 
 		$req = $db->prepare('UPDATE tasks
 			SET
