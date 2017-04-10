@@ -3,6 +3,8 @@ namespace TaskManager\Controller;
 use TaskManager\Model\Client;
 use TaskManager\View\View;
 use TaskManager\Model\Pack;
+use TaskManager\Model\Task;
+use TaskManager\Model\Tech;
 
 
 class ClientController
@@ -19,8 +21,9 @@ class ClientController
 			//echo "Soy un cliente";
 			$client = Client::getClientByMail($_SESSION['mail']);
 			$packs = Pack::packsByClientId($client->getId());
+			$tasks = Task::listTasksByClientId($client->getId());
 
-			$view->render('profile.php', ['client' => $client, 'pageTitle' => $client->getName() . "'s profile", 'packs' => $packs]);
+			$view->render('profile.php', ['client' => $client, 'pageTitle' => $client->getName() . "'s profile", 'packs' => $packs, 'tasks' => $tasks]);
 		}
 		else{
 			session_destroy();
@@ -71,6 +74,20 @@ class ClientController
 		Pack::contractPack($pack_id,$client_id);
 		header('location:../profile/');
 
+	}
+	public function addTask(){
+		if(empty($_POST)){
+			$view = new View('templates/task');
+			
+			$view->render('addByClient.php', ['pageTitle' => 'Crear tarea']);		
+		}else{
+			$client_id = Client::getClientByMail($_SESSION['mail'])->getId();
+			Task::addTask($_POST['name'], $_POST['desc'], $client_id);
+			$_POST = "";
+			header('Location:../');
+		}
+
+		
 	}
 }
 

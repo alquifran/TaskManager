@@ -1,6 +1,6 @@
 Editar tarea:
 <form method="POST">
-	Título: <input type="text" name="name" value="<?=$task->getName();?>"><br>
+	Título: <input type="text" name="name" value="<?=$task->getName();?>" required=""><br>
 	Descripción: <input type="textarea" name="desc" value="<?=$task->getDescription();?>"><br>
 	Asignar a un cliente: <br>
 	<select name="client_id">
