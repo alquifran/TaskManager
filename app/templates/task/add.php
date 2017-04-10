@@ -1,7 +1,8 @@
 Crear tarea nueva:
 <form method="POST">
-	Título: <input type="text" name="name" ><br>
+	Título: <input type="text" name="name" required=""><br>
 	Descripción: <input type="textarea" name="desc"><br>
+	
 	Asignar a un cliente: <br>
 	<select name="client_id">
 		<option value=""></option>
