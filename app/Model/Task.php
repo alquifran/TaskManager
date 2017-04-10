@@ -184,24 +184,30 @@ class Task
 
 	}
 	//Esto hay que revisarlo sí o sí aaaaa
-	public static function updateTask($name,$description,$client_id,$tech_id,$id){
+	public static function updateTask($name,$description,$client_id,$tech_id,$status,$id){
 		$db = Database::getInstance();
-		
+		if($client_id == ""){
+			$client_id = null;
+		}
 
+		if($tech_id == ""){
+			$tech_id = null;
+		}
 		$req = $db->prepare('UPDATE tasks
 			SET
 				task_name = :name,
 				task_description = :description,
 				client_id = :client_id,
-				tech_id = :tech_id
+				tech_id = :tech_id,
+				status_id = :status
 			WHERE task_id = :id');
-
 			$req->execute(array(
 				'name' => $name,
 				'description' => $description,
 				'client_id' => $client_id,
 				'tech_id' => $tech_id,
-				'id' => $id
+				'id' => $id,
+				'status' => $status
 				)
 			);
 

@@ -92,7 +92,7 @@ class TechController
 		if(isset($_POST['assign'])){
 			if(Task::getTaskById(intval($id))->getTechId() == null){
 				$task = Task::getTaskById(intval($id));
-				Task::updateTask($task->getName(), $task->getDescription(), $task->getClientId(), Tech::getTechByMail($_SESSION['mail'])->getId(), $task->getId());
+				Task::updateTask($task->getName(), $task->getDescription(), $task->getClientId(), Tech::getTechByMail($_SESSION['mail'])->getId(),$task->getStatus(), $task->getId());
 			}
 		}
 		if($task->getId() == null){
@@ -111,16 +111,21 @@ class TechController
 		}
 	}
 
-	public function assignTask($id){
-		if(Task::getTaskById(intval($id))->getTechId() == null){
-			$task = getTaskById(intval($id));
-			Task::updateTask($task->getName(), $task->getDescription(), $task->getClientId(), Tech::getTechByMail($_SESSION['mail'])->getId(), $task->getId());
+
+
+	public function updateTask($id){
+		if(empty($_POST)){
 			$view = new View('templates/task');
+			$task = Task::getTaskById($id);
 
-
+			$view->render('update.php', ['task' => $task, 'isTech' => true, 'pageTitle' => 'Editar tarea']);
 		}
 		else{
-
+			
+			$task = Task::getTaskById($id);
+			Task::updateTask($task->getName(), $_POST['desc'], $task->getClientId(), $task->getTechId(), $_POST['status_id'], $id);
+			$_POST = "";
+			header('Location:../');
 		}
 	}
 }

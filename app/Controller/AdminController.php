@@ -230,8 +230,8 @@ class AdminController
 			$view->render('update.php', ['task' => $task, 'techs' => $techs, 'clients' => $clients]);
 		}
 		else{
-			
-			Task::updateTask($_POST['name'], $_POST['desc'], $_POST['client_id'], $_POST['tech_id'], $id);
+			$_POST['client_id'] = null;
+			Task::updateTask($_POST['name'], $_POST['desc'], $_POST['client_id'], $_POST['tech_id'],$_POST['status_id'], $id);
 			$_POST = "";
 			header('Location:../');
 		}
