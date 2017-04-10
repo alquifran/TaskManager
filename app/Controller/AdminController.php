@@ -20,7 +20,7 @@ class AdminController
 			$view = new View('templates/admin');
 			//echo "Soy un admin";
 			$admin = Admin::getAdminByMail($_SESSION['mail']);
-			
+
 			$view->render('profile.php', ['admin' => $admin, 'pageTitle' => $admin->getName() . "'s profile"]);
 		}
 		else{
@@ -31,7 +31,7 @@ class AdminController
 
 	public function login(){
 		session_start();
-		
+
 		//Comprobamos si el admin ha introducido datos.
 		if(isset($_SESSION['mail'])){
 			header('location:../profile/');
@@ -43,7 +43,7 @@ class AdminController
 			if(Admin::isAdmin($_POST['mail'])){
 				//Comprobamos si la contraseña coincide.
 				if(Admin::checkPassword($_POST['mail'], $_POST['password'])){
-					
+
 					$_SESSION['user_type'] = 'admin';
 					$_SESSION['mail'] = $_POST['mail'];
 					header('Location:../profile/');
@@ -67,7 +67,7 @@ class AdminController
 			$view->render('add.php', []);
 		}
 		else{
-			
+
 			Client::addClient($_POST['name'], $_POST['password'], $_POST['mail']);
 			$_POST = "";
 			header('Location:../');
@@ -76,7 +76,7 @@ class AdminController
 	}
 
 	public function listClient(){
-		
+
 		$view = new View('templates/client');
 		$listClients = Client::listClient();
 		$view->render('list.php', ['clients' => $listClients, 'pageTitle'=>"Listado de clientes"]);
@@ -123,7 +123,7 @@ class AdminController
 
 
 	public function listTech(){
-		
+
 		$view = new View('templates/tech');
 		$listTechs = Tech::listTech();
 		$view->render('list.php', ['techs' => $listTechs, 'pageTitle'=>"Listado de técnicos"]);
@@ -142,7 +142,7 @@ class AdminController
 			$view->render('add.php', []);
 		}
 		else{
-			
+
 			Tech::addTech($_POST['name'], $_POST['password'], $_POST['mail']);
 			$_POST = "";
 			header('Location:../');
@@ -201,13 +201,25 @@ class AdminController
 			header('Location:../');
 		}
 	}
+//---------------------Paginación-------------------------------------
+	public function listTask($page){
 
-	public function listTask(){
+
+		if(isset($page) && ($page != 1)){
+				$page = $page;
+				$tasks = Task::listPagedTasks($page);
+			}else{
+				$tasks = Task::listPagedTasks(1);
+
+			}
+
 		$view = new View('templates/task');
-		$tasks = Task::listTasks();
-		$view->render('list.php', ['pageTitle'=>'Lista de tareas', 'tasks' => $tasks]);
-	}
+		$total_reg = Task::getTotalPage();
+		$view->render('list.php', ['pageTitle'=>'Lista de tareas', 'tasks' => $tasks, 'reg' => $total_reg]);
 
+
+	}
+//---------------------Fin paginación-------------------------------------
 	public function showTask($id){
 		$view = new View('templates/task');
 		$task = Task::getTaskById($id);
@@ -230,7 +242,7 @@ class AdminController
 			$view->render('update.php', ['task' => $task, 'techs' => $techs, 'clients' => $clients]);
 		}
 		else{
-			
+
 			Task::updateTask($_POST['name'], $_POST['desc'], $_POST['client_id'], $_POST['tech_id'], $id);
 			$_POST = "";
 			header('Location:../');
