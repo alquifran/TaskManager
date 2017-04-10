@@ -7,6 +7,12 @@ $request = new Request();
 // $controller = $request->getParam('controller') ?? 'page';
 if($request->hasParam('controller')){
 	$controller = $request->getParam('controller');
+	if(isset($_SESSION['user_type']) && strtolower($controller) != strtolower($_SESSION['user_type'])){
+		echo "No tienes permiso para ver esta página. ";
+		//Hay que poner el enlace de dónde está vuestro proyecto. (Por defecto está en el mío.)
+		echo "<a href='http://localhost/TM-sourcetree/".$_SESSION['user_type']."/' >Ir a mi perfil</a>";
+		die();
+	}
 }
 else{
 	$controller = 'page';
