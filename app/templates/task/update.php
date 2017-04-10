@@ -3,7 +3,7 @@ Editar tarea:
 	Título: <input type="text" name="name" value="<?=$task->getName();?>" required=""><br>
 	Descripción: <input type="textarea" name="desc" value="<?=$task->getDescription();?>"><br>
 	Asignar a un cliente: <br>
-	<select name="client_id">
+	<select name="client_id" >
 		<option value=""></option>
 		<?php foreach($clients as $client): ?>
 			<option value="<?=$client->getId();?>"

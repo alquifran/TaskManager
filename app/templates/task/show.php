@@ -9,6 +9,14 @@ Técnico asignado: <a href="../showTech/<?=$task->getTechId()?>" target="_blank"
 Estado de la tarea: <?=$task->getStatusText()?>
 <br>
 <a href='../listTask/'><button>Ir al listado de tareas</button></a>
+<?php if($_SESSION['user_type'] == 'admin'){?>
 <a href='../updateTask/<?= $task->getId(); ?>'><button>Modificar</button></a>
 <a href='../deleteTask/<?= $task->getId(); ?>'><button>Eliminar</button></a>
+<?php } else if ($_SESSION['user_type'] == 'tech' && $task->getTechId() == null) {?>
+<form method="POST">
+<input type="submit" name="assign" value="Asignar tarea">
+</form>
 
+<?php }else{?>
+<a href='../updateTask/<?= $task->getId(); ?>'><button>Modificar</button></a>
+<?php }?>

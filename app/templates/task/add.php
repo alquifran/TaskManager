@@ -4,7 +4,7 @@ Crear tarea nueva:
 	Descripción: <input type="textarea" name="desc"><br>
 	
 	Asignar a un cliente: <br>
-	<select name="client_id">
+	<select name="client_id" <?php if($_SESSION['user_type'] == 'tech') {echo "required";}?>>
 		<option value=""></option>
 		<?php foreach($clients as $client): ?>
 			<option value="<?=$client->getId();?>"><?=$client->getName();?></option>

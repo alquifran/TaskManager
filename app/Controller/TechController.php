@@ -84,5 +84,44 @@ class TechController
 			header('Location:../');
 		}
 	}
+
+	public function showTask($id){
+		$view = new View('templates/task');
+		$task = Task::getTaskById($id);
+
+		if(isset($_POST['assign'])){
+			if(Task::getTaskById(intval($id))->getTechId() == null){
+				$task = Task::getTaskById(intval($id));
+				Task::updateTask($task->getName(), $task->getDescription(), $task->getClientId(), Tech::getTechByMail($_SESSION['mail'])->getId(), $task->getId());
+			}
+		}
+		if($task->getId() == null){
+			echo "No existe la tarea solicitada. ";
+			echo "<a href='../ListTask/' >Volver a la lista</a>";
+		}
+		else if($task->getTechId() == null || $task->getTech()->getMail() == $_SESSION['mail']){
+			$task = Task::getTaskById($id);
+			$view->render('show.php', ['pageTitle'=>$task->getName(), 'task' => $task]);
+			
+		}
+		else{
+			echo "No tienes permiso para ver esta página. ";
+		//Hay que poner el enlace de dónde está vuestro proyecto. (Por defecto está en el mío.)
+			echo "<a href='../ListTask/' >Volver a la lista</a>";
+		}
+	}
+
+	public function assignTask($id){
+		if(Task::getTaskById(intval($id))->getTechId() == null){
+			$task = getTaskById(intval($id));
+			Task::updateTask($task->getName(), $task->getDescription(), $task->getClientId(), Tech::getTechByMail($_SESSION['mail'])->getId(), $task->getId());
+			$view = new View('templates/task');
+
+
+		}
+		else{
+
+		}
+	}
 }
 
