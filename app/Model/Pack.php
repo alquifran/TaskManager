@@ -34,7 +34,7 @@ class Pack
 		return $list;
 	}
 
-	public static function packByClientId($client_id){
+	public static function packsByClientId($client_id){
 		$db = Database::getInstance();
 		$req = $db->query("
 			SELECT * FROM `clients`
@@ -46,8 +46,12 @@ class Pack
 
 
 		if($req->rowCount()!=0){
-			$pack = $req->fetch();
-			return new Pack($pack['pack_name'], $pack['pack_desc'], $pack['pack_time'], $pack['pack_id']);
+			$packs = $req->fetchAll();
+			foreach($packs as $pack){
+				$list[]= new Pack($pack['pack_name'], $pack['pack_desc'], $pack['pack_time'], $pack['pack_id']);
+			}
+
+			return $list;
 		}
 		else{
 			return null;
