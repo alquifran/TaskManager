@@ -231,7 +231,7 @@ class AdminController
 		}
 		else{
 			
-			Task::updateTask($_POST['name'], $_POST['desc'], $_POST['client_id'], $_POST['tech_id'], $id);
+			Task::updateTask($_POST['name'], $_POST['desc'], $_POST['client_id'], $_POST['tech_id'],$_POST['status_id'], $id);
 			$_POST = "";
 			header('Location:../');
 		}
