@@ -15,7 +15,7 @@ class AdminController
 	}
 
 	public function profile(){
-		session_start();
+		
 		if(isset($_SESSION['mail']) && !isset($_POST['logout'])){
 			$view = new View('templates/admin');
 			//echo "Soy un admin";
@@ -30,7 +30,7 @@ class AdminController
 	}
 
 	public function login(){
-		session_start();
+		
 		
 		//Comprobamos si el admin ha introducido datos.
 		if(isset($_SESSION['mail'])){

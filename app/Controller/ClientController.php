@@ -13,7 +13,7 @@ class ClientController
 	}
 
 	public function profile(){
-		session_start();
+		
 		if(isset($_SESSION['mail']) && !isset($_POST['logout'])){
 			$view = new View('templates/client');
 			//echo "Soy un cliente";
@@ -31,7 +31,7 @@ class ClientController
 
 
 	public function login(){
-		session_start();
+		
 
 		//Comprobamos si el cliente ha introducido datos.
 		if(isset($_SESSION['mail'])){
@@ -64,7 +64,7 @@ class ClientController
 	}
 
 	public function addPack(){
-		session_start();
+		
 		$pack = Pack::PackById($_POST['pack']);
 		$client_id = Client::getClientByMail($_SESSION['mail'])->getId();
 		$pack_id = $pack->getId();

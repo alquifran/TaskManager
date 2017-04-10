@@ -3,6 +3,7 @@
 require 'vendor/autoload.php';
 // require 'bootstrap/Request.php';
 use TaskManager\Bootstrap\Request;
+session_start();
 $request = new Request();
 // $controller = $request->getParam('controller') ?? 'page';
 if($request->hasParam('controller')){
