@@ -37,8 +37,10 @@ class Task
 			SELECT *
 			FROM tasks"
 			);
-		$tasks = $req->fetchAll();
-		foreach ($tasks as $task) {
+		if($req->rowCount()!=0){
+
+			$tasks = $req->fetchAll();
+			foreach ($tasks as $task){
 				$list[] =new Task(
 								$task['task_name'],
 								$task['task_description'],
@@ -49,8 +51,12 @@ class Task
 								$task['status_id'],
 								$task['task_time_seconds'],
 								$task['task_id']);
+			}
+			return $list;
+		}else{
+
+			return null;
 		}
-		return $list;
 
 	}
 
@@ -141,6 +147,58 @@ class Task
 		}else{
 
 			return null;
+		}
+	}
+
+	public static function filterListTask($client_id, $tech_id, $status_id){
+		if($client_id == $tech_id  && $tech_id == $status_id && $status_id == null){
+			return self::listTasks();
+		}
+		else{
+			$db = Database::getInstance();
+			$queryString = "";
+			if($client_id == '-1'){
+				$queryString .= " client_id IS NULL AND ";
+			}
+			else if($client_id != null){
+				$queryString .= " client_id = " . $client_id . " AND ";
+			}
+
+			if($tech_id == '-1'){
+				$queryString .= " tech_id IS NULL AND ";
+			}
+			else if($tech_id != null){
+				$queryString .= " tech_id =" . $tech_id . " AND ";
+			}
+
+			if($status_id != null){
+				$queryString .= " status_id =" . $status_id . " AND ";
+			}
+
+
+			$req = $db->query("
+			SELECT *
+			FROM tasks WHERE ".$queryString." 1 " 
+			);
+			if($req->rowCount()!=0){
+				$tasks = $req->fetchAll();
+				foreach ($tasks as $task) {
+					$list[] =new Task(
+									$task['task_name'],
+									$task['task_description'],
+									$task['client_id'],
+									$task['tech_id'],
+									$task['task_date_start'],
+									$task['task_date_end'],
+									$task['status_id'],
+									$task['task_time_seconds'],
+									$task['task_id']);
+				}
+				return $list;
+			}
+			else{
+				return null;
+			}
 		}
 	}
 

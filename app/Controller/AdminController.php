@@ -29,6 +29,7 @@ class AdminController
 		}
 	}
 
+	
 	public function login(){
 		
 		
@@ -47,6 +48,7 @@ class AdminController
 					$_SESSION['user_type'] = 'admin';
 					$_SESSION['mail'] = $_POST['mail'];
 					header('Location:../profile/');
+					$_POST[] = "";
 					die();
 				}
 			}
@@ -64,7 +66,7 @@ class AdminController
 	public function addClient(){
 		if(empty($_POST)){
 			$view = new View('templates/client');
-			$view->render('add.php', []);
+			$view->render('add.php', ['pageTitle'=>"Crear cliente"]);
 		}
 		else{
 			
@@ -94,7 +96,7 @@ class AdminController
 		if(empty($_POST)){
 			$view = new View('templates/client');
 			$client = Client::getClientById($id);
-			$view->render('update.php', ['client' => $client]);
+			$view->render('update.php', ['client' => $client, 'pageTitle'=>"Modificar cliente ".$client->getName()]);
 		}
 		else{
 			if(isset($_POST['alta']) && ($_POST['alta'] == 1)){
@@ -139,7 +141,7 @@ class AdminController
 	public function addTech(){
 		if(empty($_POST)){
 			$view = new View('templates/tech');
-			$view->render('add.php', []);
+			$view->render('add.php', ['pageTitle'=>"Crear técnico"]);
 		}
 		else{
 			
@@ -160,7 +162,7 @@ class AdminController
 		if(empty($_POST)){
 			$view = new View('templates/tech');
 			$tech = Tech::getTechById($id);
-			$view->render('update.php', ['tech' => $tech]);
+			$view->render('update.php', ['tech' => $tech, 'pageTitle'=>"Modificar técnico ".$tech->getName()]);
 		}
 		else{
 			if(isset($_POST['alta']) && ($_POST['alta'] == 1)){
@@ -204,8 +206,31 @@ class AdminController
 
 	public function listTask(){
 		$view = new View('templates/task');
-		$tasks = Task::listTasks();
-		$view->render('list.php', ['pageTitle'=>'Lista de tareas', 'tasks' => $tasks]);
+		$client_id = $tech_id = $status_id = null;
+
+		if (isset($_POST['reset'])){
+			$_POST = "";
+		}
+		if(isset($_POST['client_id']) && $_POST['client_id'] != ""){
+			$client_id = $_POST['client_id'];
+		}
+
+		if(isset($_POST['tech_id']) && $_POST['tech_id'] != ""){
+			$tech_id = $_POST['tech_id'];
+		}
+
+		if(isset($_POST['status_id']) && $_POST['status_id'] != ""){
+			$status_id = $_POST['status_id'];
+		}
+
+
+
+
+		$tasks = Task::filterListTask($client_id, $tech_id, $status_id);
+		$clients = Client::listClient();
+		$techs = Tech::listTech();
+
+		$view->render('list.php', ['pageTitle'=>'Lista de tareas', 'tasks' => $tasks, 'clients' => $clients, 'techs' => $techs, 'status_id' => $status_id, 'client_id' => $client_id, 'tech_id' => $tech_id]);
 	}
 
 	public function showTask($id){
