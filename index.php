@@ -4,6 +4,7 @@ require 'vendor/autoload.php';
 // require 'bootstrap/Request.php';
 use TaskManager\Bootstrap\Request;
 session_start();
+
 $request = new Request();
 // $controller = $request->getParam('controller') ?? 'page';
 if($request->hasParam('controller')){
@@ -13,6 +14,12 @@ if($request->hasParam('controller')){
 		//Hay que poner el enlace de dónde está vuestro proyecto. (Por defecto está en el mío.)
 		echo "<a href='http://localhost/TM-sourcetree/".$_SESSION['user_type']."/' >Ir a mi perfil</a>";
 		die();
+	}
+	else if (!isset($_SESSION['user_type'])){
+		if($request->hasParam('action') && strtolower($request->getParam('action'))!= 'login'){
+			echo "No estás registrado";
+			die();
+		}
 	}
 }
 else{
