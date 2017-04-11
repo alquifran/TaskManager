@@ -241,6 +241,11 @@ class AdminController
 	}
 
 	public function showTask($id){
+		if(isset($_POST['addTime'])){
+			Task::addworkTime($id, $_POST['workTime']);
+			$_POST = "";
+		}
+
 		$view = new View('templates/task');
 		$task = Task::getTaskById($id);
 		$view->render('show.php', ['pageTitle'=>$task->getName(), 'task' => $task]);
