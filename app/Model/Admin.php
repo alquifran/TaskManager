@@ -57,9 +57,15 @@ class Admin
 		$req = $db->query("
 			SELECT * 
 			FROM admins 
-			WHERE admin_mail = '$mail' AND admin_password = '$password'");
+			WHERE admin_mail = '$mail'");
 		if($req->rowCount()!=0){
-			return true;
+			$admin_res = $req->fetch();
+			if(password_verify($password, $admin_res['admin_password'])){
+				return true;
+			}
+			else{
+				return false;
+			}
 		}
 		else{
 			return false;

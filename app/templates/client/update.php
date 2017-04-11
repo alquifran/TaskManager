@@ -2,8 +2,8 @@
 	<label for="name">Nombre</label>
     <input type="text" name="name" required
         value="<?= $client->getName() ?>" ><br>
-	<label for="password">Contraseña</label>
-    <input hidden="" type="password"  name="password"
+	<label for="password">Crear nueva contraseña</label>
+    <input type="password"  name="password"
         value=""><br>
 	<label for="email">Email</label>
     <input type="email" name="mail"

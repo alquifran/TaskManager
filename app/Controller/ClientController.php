@@ -35,7 +35,7 @@ class ClientController
 
 	public function login(){
 		
-
+		$message = "";
 		//Comprobamos si el cliente ha introducido datos.
 		if(isset($_SESSION['mail'])){
 			header('location:../profile/');
@@ -47,18 +47,28 @@ class ClientController
 			if(Client::isClient($_POST['mail'])){
 				//Comprobamos si la contraseña coincide.
 				if(Client::checkPassword($_POST['mail'], $_POST['password'])){
-
-					$_SESSION['user_type'] = 'client';
-					$_SESSION['mail'] = $_POST['mail'];
-					$_POST[] = "";
-					header('Location:../profile/');
-					die();
+					if(Client::getClientByMail($_POST['mail'])->getAlta()){
+						$_SESSION['user_type'] = 'client';
+						$_SESSION['mail'] = $_POST['mail'];
+						$_POST[] = "";
+						header('Location:../profile/');
+						die();
+					}
+					else{
+						$message = "Su usuario está dado de baja. Por favor, póngase en contacto con el administrador: (email del administrador)";
+					}
 				}
+				else{
+					$message = "La contraseña introducida no es correcta";
+				}
+			}
+			else{
+				$message = "El usuario introducido no existe";
 			}
 		}
 
 		$view = new View('templates/client');
-		$view->render('login.php', ['pageTitle' => 'Login client']);
+		$view->render('login.php', ['pageTitle' => 'Login client', 'message' => $message]);
 	}
 
 	public function listPacks(){

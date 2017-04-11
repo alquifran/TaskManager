@@ -31,7 +31,7 @@ class AdminController
 
 	
 	public function login(){
-		
+		$message = "";
 		
 		//Comprobamos si el admin ha introducido datos.
 		if(isset($_SESSION['mail'])){
@@ -51,10 +51,17 @@ class AdminController
 					$_POST[] = "";
 					die();
 				}
+				else{
+
+					$message = "La contraseña es incorrecta.";
+				}
+			}
+			else{
+				$message = "El usuario introducido no existe o es incorrecto.";
 			}
 		}
 		$view = new View('templates/admin');
-		$view->render('login.php', ['pageTitle' => 'Login admin']);
+		$view->render('login.php', ['pageTitle' => 'Login admin', 'message' => $message]);
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -187,8 +194,8 @@ class AdminController
 	public function addTask(){
 		if(empty($_POST)){
 			$view = new View('templates/task');
-			$clients = Client::listClient();
-			$techs = Tech::listTech();
+			$clients = Client::listAltaClient();
+			$techs = Tech::listAltaTech();
 			$view->render('add.php', ['clients' => $clients, 'techs' => $techs, 'pageTitle' => 'Crear tarea']);
 		}
 		else{
@@ -249,8 +256,8 @@ class AdminController
 		if(empty($_POST)){
 			$view = new View('templates/task');
 			$task = Task::getTaskById($id);
-			$techs = Tech::listTech();
-			$clients = Client::listClient();
+			$techs = Tech::listAltaTech();
+			$clients = Client::listAltaClient();
 
 			$view->render('update.php', ['task' => $task, 'techs' => $techs, 'clients' => $clients]);
 		}

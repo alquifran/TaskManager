@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-04-2017 a las 13:54:09
+-- Tiempo de generación: 11-04-2017 a las 10:53:32
 -- Versión del servidor: 10.1.19-MariaDB
 -- Versión de PHP: 7.0.13
 
@@ -41,8 +41,8 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`admin_id`, `admin_name`, `admin_password`, `admin_mail`) VALUES
-(1, 'admin', 'admin', 'admin@admin.com'),
-(2, 'admin2', 'admin2', 'admin2@admin.com');
+(1, 'admin', '$2y$10$45A7j9oOEwIaI4MxNmjrkewzQpMZ1iuyAkxAMxElzio3po6K10PBa', 'admin@admin.com'),
+(2, 'admin2', '$2y$10$aErKssBvViq.Q43y8flZReez43uakHSvz8mcxeelOMCgFm3NKpIEG', 'admin2@admin.com');
 
 -- --------------------------------------------------------
 
@@ -64,11 +64,12 @@ CREATE TABLE `clients` (
 --
 
 INSERT INTO `clients` (`client_id`, `client_name`, `client_password`, `client_mail`, `client_alta`) VALUES
-(1, 'David', '1234', 'david@david.com', 0),
-(2, 'Juan', '4321', 'juan@juan.com', 1),
-(3, 'Ola', 'bla', 'ola@ola.com', 0),
-(5, 'fran', 'fran', 'fran@fran.com', 1),
-(8, 'Raul', 'raul', 'raul@raul.com', 1);
+(1, 'David', '$2y$10$6dmxOtLTbRPUT9XzVJbhvede2PcDTo3GB80AtuJizh/FFc.pIIYe6', 'david@david.com', 0),
+(2, 'Juan', '$2y$10$oWRGZne1Ki/RtkjGcKtxJO28lQYwzrnQ5IaUl4/.ZJt.Q1N/I.dry', 'juan@juan.com', 1),
+(3, 'Ola', '$2y$10$ltheKZKgfd2TlA6hqId5deaLNy3eBApOBH2Extb8jDnWoYHP9AI7S', 'ola@ola.com', 0),
+(5, 'fran', '$2y$10$79x4ens2Qf/2sLK6RXD8H.qlDtYpgkeMJsHWSXDbuAx.g7tqbBkZO', 'fran@fran.com', 1),
+(8, 'Raul', '$2y$10$5r6aN0jwOURKC/Heu5NNXue.vGNz.g9KBqYnFUaL5vChtvyGb3A82', 'raul@raul.com', 1),
+(9, 'mario', '$2y$10$wZT6zJv8zYqIyGjhK/iL..GgENsYsje10QXvwkhF0cjmhEGlbtuoK', 'mario@mario.mario', 1);
 
 -- --------------------------------------------------------
 
@@ -90,7 +91,13 @@ CREATE TABLE `client_pack` (
 --
 
 INSERT INTO `client_pack` (`client_pack_id`, `client_id`, `pack_id`, `consumed_time`, `status`) VALUES
-(1, 1, 1, 0, 'active');
+(1, 1, 1, 0, 'active'),
+(2, 2, 2, 0, ''),
+(3, 2, 1, 0, ''),
+(4, 2, 2, 0, ''),
+(5, 2, 1, 0, ''),
+(6, 2, 2, 0, ''),
+(7, 2, 2, 0, '');
 
 -- --------------------------------------------------------
 
@@ -138,11 +145,18 @@ CREATE TABLE `tasks` (
 --
 
 INSERT INTO `tasks` (`task_id`, `task_name`, `task_description`, `client_id`, `tech_id`, `task_date_start`, `task_date_end`, `status_id`, `task_time_seconds`) VALUES
-(1, 'tarea1', '', NULL, NULL, NULL, NULL, 0, 0),
-(2, 'tarea2', '', NULL, NULL, NULL, NULL, 0, 0),
-(3, 'tarea3', '', NULL, NULL, NULL, NULL, 0, 0),
-(4, 'task1', '', NULL, NULL, NULL, NULL, 0, 0),
-(5, 'task2', '', NULL, NULL, NULL, NULL, 0, 0);
+(4, 'task11111', 'fddf', NULL, 1, NULL, NULL, 2, 0),
+(5, 'task2', '', NULL, 1, NULL, NULL, 0, 0),
+(11, 'Tarea2', 'Tarea2', 3, 1, NULL, NULL, 1, NULL),
+(14, 'Blanco', 'Cliente en blanco', NULL, 1, NULL, NULL, 1, NULL),
+(16, 'Tearea 4', 'Aprender a mecanografiar', 8, 1, NULL, NULL, 0, NULL),
+(18, 'ADfadsf', 'fadssafa', 2, 2, NULL, NULL, 0, NULL),
+(19, 'Enviar a cliente', 'lo dicho', 2, 2, NULL, NULL, 2, NULL),
+(20, 'abdcefg', 'sentadito me quede', 1, 2, NULL, NULL, 0, NULL),
+(21, 'asdfasdf', '', NULL, 1, NULL, NULL, 2, NULL),
+(22, 'Dddd', '', NULL, NULL, NULL, NULL, 0, NULL),
+(23, 'Fff', '', NULL, NULL, NULL, NULL, 0, NULL),
+(24, 'tarea de mario', 'taraearstaereataera', 9, NULL, NULL, NULL, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -164,8 +178,9 @@ CREATE TABLE `technicians` (
 --
 
 INSERT INTO `technicians` (`tech_id`, `tech_name`, `tech_password`, `tech_mail`, `tech_alta`) VALUES
-(1, 'tecnico1', '1234', 'tecnico1@tecnico1.com', 0),
-(2, 'tecnico2', '4321', 'tecnico2@tecnico2.com', 0);
+(1, 'tecnico1', '$2y$10$6VmQDpeYZKHrR9PVPTAZguIc3V9bA4w15noreW6FO6.Zdpy/SJX6S', 'tecnico1@tecnico1.com', 1),
+(2, 'tecnico2', '$2y$10$mHrzkit2ZVxJK7YWdG2YGOxG7ypFZ8poG/.ftSPN7drbGTYNZfK56', 'tecnico2@tecnico2.com', 1),
+(3, 'tec3', '$2y$10$Kl6jLbZKTySkfe4.4HcIj.oWE8AgR9ksHOXg1WQzNw7VTyGoa/k8K', 'tec3@tec3.com', 0);
 
 --
 -- Índices para tablas volcadas
@@ -227,12 +242,12 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT de la tabla `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT de la tabla `client_pack`
 --
 ALTER TABLE `client_pack`
-  MODIFY `client_pack_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `client_pack_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `packs`
 --
@@ -242,7 +257,7 @@ ALTER TABLE `packs`
 -- AUTO_INCREMENT de la tabla `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT de la tabla `technicians`
 --
