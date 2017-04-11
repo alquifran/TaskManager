@@ -29,7 +29,7 @@ class TechController
 	}
 	public function login(){
 		
-		
+		$message ="";
 		//Comprobamos si el admin ha introducido datos.
 		if(isset($_SESSION['mail'])){
 			header('location:../profile/');
@@ -41,17 +41,23 @@ class TechController
 			if(Tech::isTech($_POST['mail'])){
 				//Comprobamos si la contraseña coincide.
 				if(Tech::checkPassword($_POST['mail'], $_POST['password'])){
-					
-					$_SESSION['user_type'] = 'tech';
-					$_SESSION['mail'] = $_POST['mail'];
-					header('Location:../profile/');
-					$_POST[] = "";
-					die();
+					if(Tech::getTechByMail($_POST['mail'])->getAlta()){
+						$_SESSION['user_type'] = 'tech';
+						$_SESSION['mail'] = $_POST['mail'];
+						header('Location:../profile/');
+						$_POST[] = "";
+						die();
+					}else{
+						$message = "Su usuario está dado de baja. Por favor, póngase en contacto con el administrador: (email del administrador)";
+					}
+				}else{
+					$message = "La contraseña introducida no es correcta";
 				}
-			}
-		}
+			}else{
+				$message = "El usuario introducido no existe";
+		}}
 		$view = new View('templates/tech');
-		$view->render('login.php', ['pageTitle' => 'Login tech']);
+		$view->render('login.php', ['pageTitle' => 'Login tech', 'message' => $message]);
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -92,7 +98,7 @@ class TechController
 	public function addTask(){
 		if(empty($_POST)){
 			$view = new View('templates/task');
-			$clients = Client::listClient();
+			$clients = Client::listAltaClient();
 			$techs = Tech::listTech();
 			$view->render('add.php', ['clients' => $clients, 'techs' => $techs, 'pageTitle' => 'Crear tarea']);
 		}
@@ -110,6 +116,11 @@ class TechController
 	}
 
 	public function showTask($id){
+		if(isset($_POST['addTime'])){
+			Task::addworkTime($id, $_POST['workTime']);
+			$_POST = "";
+		}
+
 		$view = new View('templates/task');
 		$task = Task::getTaskById($id);
 

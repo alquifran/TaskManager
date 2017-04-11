@@ -71,9 +71,15 @@ class Tech
 		$req = $db->query("
 			SELECT * 
 			FROM technicians 
-			WHERE tech_mail = '$mail' AND tech_password = '$password'");
+			WHERE tech_mail = '$mail'");
 		if($req->rowCount()!=0){
-			return true;
+			$tech_res = $req->fetch();
+			if(password_verify($password, $tech_res['tech_password'])){
+				return true;
+			}
+			else{
+				return false;
+			}
 		}
 		else{
 			return false;
@@ -93,8 +99,35 @@ class Tech
 
 	}
 
+	public static function listAltaTech(){
+		$list = [];
+		$db = Database::getInstance();
+		$req = $db->query('SELECT * FROM technicians WHERE tech_alta = 1');
+		foreach($req->fetchAll() as $tech){
+			$list[] = new Tech($tech['tech_id'], $tech['tech_name'], $tech['tech_mail'], $tech['tech_password'], $tech['tech_alta']);
+	
+		}
+
+		return $list;
+
+	}
+
+	public static function listBajaTech(){
+		$list = [];
+		$db = Database::getInstance();
+		$req = $db->query('SELECT * FROM technicians WHERE tech_alta = 0');
+		foreach($req->fetchAll() as $tech){
+			$list[] = new Tech($tech['tech_id'], $tech['tech_name'], $tech['tech_mail'], $tech['tech_password'], $tech['tech_alta']);
+	
+		}
+
+		return $list;
+
+	}
+
+
 	public static function addTech($name,$password,$mail){
-		
+		$password = password_hash($password, PASSWORD_DEFAULT);
 		$db = Database::getInstance();
 		$req = $db->prepare('INSERT INTO technicians 
 			(tech_name,tech_password,tech_mail)
@@ -112,7 +145,11 @@ class Tech
 			'mail' => $mail, 'alta' => $alta));
 		}
 		else{
-			//En caso de que la contraseña cambie.
+			$password = password_hash($password, PASSWORD_DEFAULT);
+			$req = $db->prepare('UPDATE technicians 
+			SET tech_name = :name, tech_mail = :mail, tech_alta = :alta, tech_password = :password WHERE tech_id = :id');
+			$req->execute(array('id' => $id, 'name' => $name,
+			'mail' => $mail, 'alta' => $alta, 'password' => $password));
 		}
 	}
 

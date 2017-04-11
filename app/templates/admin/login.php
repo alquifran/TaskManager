@@ -1,4 +1,3 @@
-
 <body class="body_login">
 <form class="login" action="" method="POST">
         <div><label>Email:</label><input type="email" name="mail"></div>

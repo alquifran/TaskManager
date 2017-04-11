@@ -40,6 +40,34 @@ class Client
 
 	}
 
+	public static function listAltaClient(){
+		$list = [];
+		$db = Database::getInstance();
+		$req = $db->query('SELECT * FROM clients WHERE client_alta = 1');
+		foreach($req->fetchAll() as $client){
+			$list[] = new Client($client['client_id'], $client['client_name'], $client['client_password'], $client['client_alta']);
+	
+		}
+
+		return $list;
+
+
+	}
+
+	public static function listBajaClient(){
+		$list = [];
+		$db = Database::getInstance();
+		$req = $db->query('SELECT * FROM clients WHERE client_alta = 0');
+		foreach($req->fetchAll() as $client){
+			$list[] = new Client($client['client_id'], $client['client_name'], $client['client_password'], $client['client_alta']);
+	
+		}
+
+		return $list;
+
+
+	}
+
 	public static function getClientById($id){
 		$db = Database::getInstance();
 		$req = $db->query("
@@ -81,9 +109,16 @@ class Client
 		$req = $db->query("
 			SELECT * 
 			FROM clients 
-			WHERE client_mail = '$mail' AND client_password = '$password'");
+			WHERE client_mail = '$mail'");
+
 		if($req->rowCount()!=0){
-			return true;
+			$client_res = $req->fetch();
+			if(password_verify($password, $client_res['client_password'])){
+				return true;
+			}
+			else{
+				return false;
+			}
 		}
 		else{
 			return false;
@@ -91,7 +126,7 @@ class Client
 	}
 
 	public static function addClient($name,$password,$mail){
-		
+		$password = password_hash($password, PASSWORD_DEFAULT );
 		$db = Database::getInstance();
 		$req = $db->prepare('INSERT INTO clients 
 			(client_name,client_password,client_mail)
@@ -104,13 +139,18 @@ class Client
 	public static function updateClient($id, $name, $password, $mail, $alta){
 		$db = Database::getInstance();
 		if($password == ""){
+
 			$req = $db->prepare('UPDATE clients 
 			SET client_name = :name, client_mail = :mail, client_alta = :alta WHERE client_id = :id');
 			$req->execute(array('id' => $id, 'name' => $name,
 			'mail' => $mail, 'alta' => $alta));
 		}
 		else{
-			//En caso de que la contraseña cambie.
+			$password = password_hash($password, PASSWORD_DEFAULT);
+			$req = $db->prepare('UPDATE clients 
+			SET client_name = :name, client_mail = :mail, client_alta = :alta, client_password = :password WHERE client_id = :id');
+			$req->execute(array('id' => $id, 'name' => $name,
+			'mail' => $mail, 'alta' => $alta, 'password' => $password));
 		}
 	}
 	public static function deleteClient($id){

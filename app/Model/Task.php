@@ -221,27 +221,28 @@ class Task
 								$task['task_date_end'],
 								$task['status_id'],
 								$task['task_time_seconds'],
-								$task['task_id']); ;
+								$task['task_id']);;
 
 	}
 
-	public static function addTask($name,$description,$client_id=null,$tech_id=null,$status=0){
+	public static function addTask($name,$description,$client_id=null,$tech_id=null,$status=0,$workTime=0){
 
 		$db = Database::getInstance();
 		$req = $db->prepare('INSERT INTO tasks
-			(task_name,task_description,client_id,tech_id,status_id)
-			VALUES (:name, :description, :client_id, :tech_id, :status )');
+			(task_name,task_description,client_id,tech_id,status_id,task_time_seconds)
+			VALUES (:name, :description, :client_id, :tech_id, :status, :workTime)');
 		$req->execute(array(
 				'name' => $name,
 				'description' => $description,
 				'client_id' => $client_id,
 				'tech_id' => $tech_id,
-				'status' => $status
+				'status' => $status,
+				'workTime' => $workTime
 				)
 		);
 
 	}
-	//Esto hay que revisarlo sí o sí aaaaa
+
 	public static function updateTask($name,$description,$client_id,$tech_id,$status,$id){
 		$db = Database::getInstance();
 		if($client_id == ""){
@@ -271,7 +272,54 @@ class Task
 
 
 	}
+	//Funciones con el tiempo.
+	// Añadir tiempo a una tarea.
+	public static function addworkTime($id, $workTime){
+		$task = self::getTaskById($id);
+		$currentTime= $task->getworkTime();
 
+		$totalTime = $currentTime + $workTime * 60;
+		
+		$db = Database::getInstance();
+		$req = $db->prepare('UPDATE tasks
+			SET
+				task_time_seconds = :totalTime
+			WHERE task_id = :id');
+			$req->execute(array(
+				'id' => $id,
+				'totalTime' => $totalTime
+				)
+			);
+	}
+	//Obtener el tiempo total empleado en las tareas de un cliente.
+	public static function sumAllClientTime($client_id){
+
+		$db = Database::getInstance();
+		$req = $db->prepare('SELECT SUM(task_time_seconds) as totalTime FROM tasks;
+			WHERE client_id = :client_id');
+			$req->execute(array(
+				'client_id' => $client_id,
+				)
+			);
+		$time = $req->fetch();
+		return $time['totalTime']/60;
+	}
+	// Obtener el tiempo total que lleva empleado un técnico en sus tareas.
+	public static function sumAllTechTime($tech_id){
+
+		$db = Database::getInstance();
+		$req = $db->prepare('SELECT SUM(task_time_seconds) as totalTime FROM tasks;
+			WHERE tech_id = :tech_id');
+			$req->execute(array(
+				'tech_id' => $tech_id,
+				)
+			);
+		$time = $req->fetch();
+		return $time['totalTime']/60;
+	}
+
+	// Fin Funciones con el tiempo
+	
 	public static function deleteTask($id){
 		$db = Database::getInstance();
 		$id = intval($id);
@@ -279,6 +327,7 @@ class Task
 		$req->execute(array('id' => $id));
 	}
 
+	//GETTERS Y SETTERS
 	function getId(){
 		return $this->id;
 	}
@@ -377,12 +426,15 @@ class Task
 
 
 	function getworkTime(){
-		return $this->start;
+		return $this->workTime;
 	}
 
 	function setworkTime($workTime){
 		$this->workTime = $workTime;
 	}
+
+	function getworkTimeAsMin(){
+		return (($this->workTime - ($this->workTime % 60))/ 60) ;
+	}
+
 }
-
-
