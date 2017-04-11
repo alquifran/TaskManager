@@ -293,9 +293,8 @@ class Task
 	}
 	//Obtener el tiempo total empleado en las tareas de un cliente.
 	public static function sumAllClientTime($client_id){
-
 		$db = Database::getInstance();
-		$req = $db->prepare('SELECT SUM(task_time_seconds) as totalTime FROM tasks;
+		$req = $db->prepare('SELECT SUM(task_time_seconds) as totalTime FROM tasks
 			WHERE client_id = :client_id');
 			$req->execute(array(
 				'client_id' => $client_id,
@@ -308,7 +307,7 @@ class Task
 	public static function sumAllTechTime($tech_id){
 
 		$db = Database::getInstance();
-		$req = $db->prepare('SELECT SUM(task_time_seconds) as totalTime FROM tasks;
+		$req = $db->prepare('SELECT SUM(task_time_seconds) as totalTime FROM tasks
 			WHERE tech_id = :tech_id');
 			$req->execute(array(
 				'tech_id' => $tech_id,
