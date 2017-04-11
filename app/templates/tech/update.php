@@ -9,10 +9,9 @@
     <input type="email" name="mail"
     value="<?= $tech->getMail() ?>"><br>
     Alta: <input type="checkbox" value="1" name="alta" <?php if($tech->getAlta()){echo 'checked';}?>><br>
-	<input type="submit" value="Modificar teche">
+	<input type="submit" value="Modificar tech">
 </form>
 <br>
 <a href='../profile/'><button>Volver al listado</button></a>
-<br>
-<a href='../showTech/<?= $tech->getTechById() ?>'><button>Cancelar</button></a>
+<a href='../showTech/<?= $tech->getId() ?>'><button>Cancelar</button></a>
 <a href='../'><button>Volver al listado de techs</button></a>

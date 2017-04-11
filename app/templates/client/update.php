@@ -13,6 +13,5 @@
 </form>
 <br>
 <a href='../profile/'><button>Volver al listado</button></a>
-<br>
-<a href='../showClient/<?= $client->getClientById() ?>'><button>Cancelar</button></a>
-<a href='../'><button>Volver al listado de clientes</button></a>
+<a href='../showClient/<?= $client->getId() ?>'><button>Cancelar</button></a>
+<a href='../listClient/'><button>Volver al listado de clientes</button></a>

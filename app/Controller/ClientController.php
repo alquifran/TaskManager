@@ -50,6 +50,7 @@ class ClientController
 
 					$_SESSION['user_type'] = 'client';
 					$_SESSION['mail'] = $_POST['mail'];
+					$_POST[] = "";
 					header('Location:../profile/');
 					die();
 				}

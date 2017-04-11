@@ -45,6 +45,7 @@ class TechController
 					$_SESSION['user_type'] = 'tech';
 					$_SESSION['mail'] = $_POST['mail'];
 					header('Location:../profile/');
+					$_POST[] = "";
 					die();
 				}
 			}
@@ -61,8 +62,31 @@ class TechController
 
 	public function listTask(){
 		$view = new View('templates/task');
-		$tasks = Task::listTasks();
-		$view->render('list.php', ['pageTitle'=>'Lista de tareas', 'tasks' => $tasks]);
+		$client_id = $tech_id = $status_id = null;
+
+		if (isset($_POST['reset'])){
+			$_POST = "";
+		}
+		if(isset($_POST['client_id']) && $_POST['client_id'] != ""){
+			$client_id = $_POST['client_id'];
+		}
+
+		if(isset($_POST['tech_id']) && $_POST['tech_id'] != ""){
+			$tech_id = $_POST['tech_id'];
+		}
+
+		if(isset($_POST['status_id']) && $_POST['status_id'] != ""){
+			$status_id = $_POST['status_id'];
+		}
+
+
+
+
+		$tasks = Task::filterListTask($client_id, $tech_id, $status_id);
+		$clients = Client::listClient();
+		$techs = Tech::listTech();
+
+		$view->render('list.php', ['pageTitle'=>'Lista de tareas', 'tasks' => $tasks, 'clients' => $clients, 'techs' => $techs, 'status_id' => $status_id, 'client_id' => $client_id, 'tech_id' => $tech_id]);
 	}
 
 	public function addTask(){
