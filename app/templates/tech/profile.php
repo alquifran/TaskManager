@@ -1,13 +1,4 @@
-Hola técnico <?=$tech->getName();?><br>
-<?=$tech->getMail();?>
-<br>
-<br>
-
-<a href="../addTask/">Crear tarea</a> <br>
-<a href="../listTask/">Lista de tareas</a>
+<h1 class="welcome"> Bienvenido <?=$tech->getName();?></h1><br>
 
 
-<form method="POST">
-		<input type="submit" name="logout" value="Cerrar sesión">
-	</form>
-	<?php //include '../task/list.php';?> 
+

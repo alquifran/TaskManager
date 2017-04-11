@@ -1,46 +1,51 @@
-Hola cliente <?=$client->getName();?><br>
-<?=$client->getMail();?>
-<br>
 
-<h2>Tareas asociadas a tu perfil: </h2>
+<h1 class="welcome">Bienvenido <?=$client->getName();?></h1><br>
+
+
+<table class="tasks">
+<tr><td colspan="4"><h3>Tareas asociadas a tu perfil: </h3></td></tr>
+<th>Titulo</th>
+<th>Descripción</th>
+<th>Estado</th>
+<th>Tiempo</th>
 
 		<?php
 			if($tasks == null){
-				echo "No hay tareas";
+				echo "<tr><td>No hay tareas</td></tr>";
 			}
 			else{
 				foreach ($tasks as $task) {
-					echo $task->getName() . "--------". $task->getDescription() ."--------" . $task->getStatusText();				
+					echo "<tr><td>" . $task->getName() . "</td>" . "<td>". $task->getDescription() ."</td><td>" . $task->getStatusText() . "</td><td>" . "</td></tr>";
 					echo "<br>";
 				}
 			}
 
 
 		?>
-	<a href="../addTask/">Add Task</a>
-
-	<?php //include '../task/list.php';?>
-	<h2>Pack contratado actualmente: </h2>
+</table>
+<table class="packs">
+	<tr><td><h3>Pack contratado actualmente: </h3></td></tr>
 
 		<?php
 			if($packs == null){
-				echo "No hay packs contratados";
+				echo "<tr><td>No hay packs contratados</td></tr>";
 			}
 			else{
 				foreach ($packs as $pack) {
-					echo $pack->getName();
-					echo "<br>";
+					echo "<tr><td>".$pack->getName() ."</td></tr>";
 				}
 			}
 
 		?>
+</table>
+
 	<!-- <h2>Contrata un Pack: </h2> -->
 
 
 
 
 
-<br>
+<!-- <br>
 <br>
 <br>
 <form method="POST" action="../listPacks/">
@@ -49,4 +54,4 @@ Hola cliente <?=$client->getName();?><br>
 <form method="POST">
 
 		<input type="submit" name="logout" value="Cerrar sesión">
-	</form>
+	</form> -->
