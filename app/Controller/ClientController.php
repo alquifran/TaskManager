@@ -22,8 +22,9 @@ class ClientController
 			$client = Client::getClientByMail($_SESSION['mail']);
 			$packs = Pack::packsByClientId($client->getId());
 			$tasks = Task::listTasksByClientId($client->getId());
+			$totaltime = Task::sumAllClientTime($client->getId());
 
-			$view->render('profile.php', ['client' => $client, 'pageTitle' => $client->getName() . "'s profile", 'packs' => $packs, 'tasks' => $tasks]);
+			$view->render('profile.php', ['client' => $client, 'pageTitle' => $client->getName() . "'s profile", 'packs' => $packs, 'tasks' => $tasks, 'time' => $totaltime]);
 		}
 		else{
 			session_destroy();
