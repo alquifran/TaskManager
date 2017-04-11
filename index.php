@@ -12,7 +12,7 @@ if($request->hasParam('controller')){
 	if(isset($_SESSION['user_type']) && strtolower($controller) != strtolower($_SESSION['user_type'])){
 		echo "No tienes permiso para ver esta página. ";
 		//Hay que poner el enlace de dónde está vuestro proyecto. (Por defecto está en el mío.)
-		echo "<a href='http://localhost/TM-sourcetree/".$_SESSION['user_type']."/' >Ir a mi perfil</a>";
+		echo "<a href='http://localhost/TaskManager/".$_SESSION['user_type']."/' >Ir a mi perfil</a>";
 		die();
 	}
 	else if (!isset($_SESSION['user_type'])){
@@ -39,4 +39,4 @@ else{
 // intanciamos el controlador
 $controller = new $controller;
 // y llamamos a la "acción"/método pasando el id si lo hay
-$controller->$action($request->getParam('id')); 
+$controller->$action($request->getParam('id'));
