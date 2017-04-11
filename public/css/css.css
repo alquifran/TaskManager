@@ -19,6 +19,7 @@ body{
 footer {
   padding: 1rem;
   background-color: black;
+  color: white;
   text-align: center;
 }
 .tasks{
@@ -133,4 +134,7 @@ th{
     background-color: #CEECF5;
 }
 
+.body_login div{
+    flex:1;
+}
 

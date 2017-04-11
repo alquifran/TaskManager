@@ -1,12 +1,18 @@
 <?php
 namespace TaskManager\Controller;
+use TaskManager\View\View;
 
 class PageController{
 
 	public function index(){
-		echo "<a href=Client/Login/>Client</a><br>";
-		echo "<a href=Admin/Login/>Admin</a><br>";
-		echo "<a href=Tech/Login/>Técnico</a><br>";
+		if(isset($_SESSION['mail'])){
+
+			header("location:".$_SESSION['user_type']."/profile/");
+			die();
+		}
+		
+		$view = new View('templates/page');
+		$view->render('inicio.php', ['pageTitle' => 'Bienvenidos']);
 	}
 	
 }

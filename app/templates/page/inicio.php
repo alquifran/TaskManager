@@ -1,7 +1,6 @@
 <body class="body_login">
-<?=$message;?>
-<form class="login" action="" method="POST">
-<h3>Login de técnico</h3><br>
+<form class="login" action="Client/Login/" method="POST">
+<h3>Login de cliente</h3> <br>
         <div><label>Email:</label><input type="email" name="mail"></div>
         <div><label>Contraseña:</label><input type="password" name="password"></div>
 
@@ -9,5 +8,8 @@
 
 </form>
 
-<a href="../../">¿No eres un técnico?</a>
+<a href="Admin/Login/">Login de administrador</a><br>
+<a href="Tech/Login/">Login de técnico</a>
 </body>
+
+

@@ -23,6 +23,7 @@ class ClientController
 			$packs = Pack::packsByClientId($client->getId());
 			$tasks = Task::listTasksByClientId($client->getId());
 			$totaltime = Task::sumAllClientTime($client->getId());
+			
 
 			$view->render('profile.php', ['client' => $client, 'pageTitle' => $client->getName() . "'s profile", 'packs' => $packs, 'tasks' => $tasks, 'time' => $totaltime]);
 		}
