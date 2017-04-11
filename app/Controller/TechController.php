@@ -116,6 +116,11 @@ class TechController
 	}
 
 	public function showTask($id){
+		if(isset($_POST['addTime'])){
+			Task::addworkTime($id, $_POST['workTime']);
+			$_POST = "";
+		}
+
 		$view = new View('templates/task');
 		$task = Task::getTaskById($id);
 

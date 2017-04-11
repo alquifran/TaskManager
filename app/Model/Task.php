@@ -221,27 +221,28 @@ class Task
 								$task['task_date_end'],
 								$task['status_id'],
 								$task['task_time_seconds'],
-								$task['task_id']); ;
+								$task['task_id']);;
 
 	}
 
-	public static function addTask($name,$description,$client_id=null,$tech_id=null,$status=0){
+	public static function addTask($name,$description,$client_id=null,$tech_id=null,$status=0,$workTime=0){
 
 		$db = Database::getInstance();
 		$req = $db->prepare('INSERT INTO tasks
-			(task_name,task_description,client_id,tech_id,status_id)
-			VALUES (:name, :description, :client_id, :tech_id, :status )');
+			(task_name,task_description,client_id,tech_id,status_id,task_time_seconds)
+			VALUES (:name, :description, :client_id, :tech_id, :status, :workTime)');
 		$req->execute(array(
 				'name' => $name,
 				'description' => $description,
 				'client_id' => $client_id,
 				'tech_id' => $tech_id,
-				'status' => $status
+				'status' => $status,
+				'workTime' => $workTime
 				)
 		);
 
 	}
-	//Esto hay que revisarlo sí o sí aaaaa
+
 	public static function updateTask($name,$description,$client_id,$tech_id,$status,$id){
 		$db = Database::getInstance();
 		if($client_id == ""){
@@ -272,6 +273,26 @@ class Task
 
 	}
 
+	public static function addworkTime($id, $workTime){
+		$task = self::getTaskById($id);
+		$currentTime= $task->getworkTime();
+
+		$totalTime = $currentTime + $workTime * 60;
+		
+		$db = Database::getInstance();
+		$req = $db->prepare('UPDATE tasks
+			SET
+				task_time_seconds = :totalTime
+			WHERE task_id = :id');
+			$req->execute(array(
+				'id' => $id,
+				'totalTime' => $totalTime
+				)
+			);
+
+
+
+	}
 	public static function deleteTask($id){
 		$db = Database::getInstance();
 		$id = intval($id);
@@ -377,12 +398,15 @@ class Task
 
 
 	function getworkTime(){
-		return $this->start;
+		return $this->workTime;
 	}
 
 	function setworkTime($workTime){
 		$this->workTime = $workTime;
 	}
+
+	function getworkTimeAsMin(){
+		return (($this->workTime - ($this->workTime % 60))/ 60) ;
+	}
+
 }
-
-
