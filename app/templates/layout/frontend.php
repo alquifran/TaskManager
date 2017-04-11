@@ -11,16 +11,16 @@
 
 </head>
 <body>
-<div class="clearfix">
 <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin') include 'admin-header.php';?>
-
 
 <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'client') include 'client-header.php';?>
 
 <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'tech') include 'tech-header.php';?>
-	<?= $pageContent ?>
 
+<div class="clearfix">
+	<?= $pageContent ?>
 </div>
+
 <footer><p>DreamWeb</p></footer>
 </body>
 </html>
