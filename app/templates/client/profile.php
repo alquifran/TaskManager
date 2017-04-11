@@ -48,20 +48,3 @@
 
 		?>
 </table>
-
-	<!-- <h2>Contrata un Pack: </h2> -->
-
-
-
-
-
-<!-- <br>
-<br>
-<br>
-<form method="POST" action="../listPacks/">
-	<input type="submit" name="packs" value="Contratar Pack">
-</form>
-<form method="POST">
-
-		<input type="submit" name="logout" value="Cerrar sesión">
-	</form> -->
