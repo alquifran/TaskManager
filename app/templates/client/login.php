@@ -1,8 +1,11 @@
-<form action="" method="POST">
-        Mail:<input type="email" name="mail" placeholder="mail"><br>
-        Password:<input type="password" name="password" placeholder="password"><br>
-        <input type="submit" name="submit">
+<body class="body_login">
+<form class="login" action="" method="POST">
+        <div><label>Email:</label><input type="email" name="mail"></div>
+        <div><label>Contraseña:</label><input type="password" name="password"></div>
 
-    </form>
+        <div><input type="submit" name="submit"></div>
+
+</form>
 
 <a href="../../">¿No eres un cliente?</a>
+</body>
