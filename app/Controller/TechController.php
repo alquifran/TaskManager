@@ -92,7 +92,7 @@ class TechController
 		$clients = Client::listClient();
 		$techs = Tech::listTech();
 
-		$view->render('list.php', ['pageTitle'=>'Lista de tareas', 'tasks' => $tasks, 'clients' => $clients, 'techs' => $techs, 'status_id' => $status_id, 'client_id' => $client_id, 'tech_id' => $tech_id]);
+		$view->render('listTech.php', ['pageTitle'=>'Lista de tareas', 'tasks' => $tasks, 'clients' => $clients, 'techs' => $techs, 'status_id' => $status_id, 'client_id' => $client_id, 'tech_id' => $tech_id]);
 	}
 
 	public function addTask(){
@@ -111,7 +111,7 @@ class TechController
 			}
 			Task::addTask($_POST['name'], $_POST['desc'], $_POST['client_id'], $_POST['tech_id']);
 			$_POST = "";
-			header('Location:../');
+			header('Location:../listTask/');
 		}
 	}
 

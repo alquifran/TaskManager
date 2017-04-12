@@ -4,7 +4,7 @@
         value="<?= $tech->getName() ?>" ><br>
 	<label for="password">Crear nueva contraseña</label>
     <input type="password"  name="password"
-        value=""><br>
+        value="" minlength="6"><br>
 	<label for="email">Email</label>
     <input type="email" name="mail"
     value="<?= $tech->getMail() ?>"><br>

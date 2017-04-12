@@ -79,7 +79,7 @@ class AdminController
 			
 			Client::addClient($_POST['name'], $_POST['password'], $_POST['mail']);
 			$_POST = "";
-			header('Location:../');
+			header('Location:../listClient/');
 		}
 
 	}
@@ -114,7 +114,7 @@ class AdminController
 			}
 			Client::updateClient($id, $_POST['name'], $_POST['password'], $_POST['mail'], $alta);
 			$_POST = "";
-			header('Location:../');
+			header('Location:../listClient/');
 		}
 	}
 
@@ -154,7 +154,7 @@ class AdminController
 			
 			Tech::addTech($_POST['name'], $_POST['password'], $_POST['mail']);
 			$_POST = "";
-			header('Location:../');
+			header('Location:../listTech/');
 		}
 
 	}
@@ -180,7 +180,7 @@ class AdminController
 			}
 			Tech::updateTech($id, $_POST['name'], $_POST['password'], $_POST['mail'], $alta);
 			$_POST = "";
-			header('Location:../');
+			header('Location:../listTech/');
 		}
 	}
 
@@ -207,7 +207,7 @@ class AdminController
 			}
 			Task::addTask($_POST['name'], $_POST['desc'], $_POST['client_id'], $_POST['tech_id']);
 			$_POST = "";
-			header('Location:../');
+			header('Location:../listTask/');
 		}
 	}
 
@@ -270,7 +270,7 @@ class AdminController
 			
 			Task::updateTask($_POST['name'], $_POST['desc'], $_POST['client_id'], $_POST['tech_id'],$_POST['status_id'], $id);
 			$_POST = "";
-			header('Location:../');
+			header('Location:../listTask/');
 		}
 
 	}

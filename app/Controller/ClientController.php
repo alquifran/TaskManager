@@ -29,7 +29,7 @@ class ClientController
 		}
 		else{
 			session_destroy();
-			header('location:../login/');
+			header('location:../../');
 		}
 	}
 

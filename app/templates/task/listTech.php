@@ -67,10 +67,10 @@ else{ ?>
 					<a href="../showTask/<?=$task->getId();?>"><?=$task->getName();?></a>
 				</td>
 				<td>
-					<a href="../showClient/<?=$task->getClientId()?>" target="_blank"><?=$task->getClient()->getName();?></a>
+					<?=$task->getClient()->getName();?>
 				</td>
 				<td>
-					<a href="../showTech/<?=$task->getTechId()?>" target="_blank"><?=$task->getTech()->getName();?>
+					<?=$task->getTech()->getName();?>
 				</td>
 				<td>
 					<?=$task->getStatusText(); ?>

@@ -4,10 +4,10 @@
         value="" ><br>
 	<label for="password">Contraseña</label>
     <input type="password"  name="password"
-        value=""><br>
+        value="" required="" minlength="6"><br>
 	<label for="email">Email</label>
     <input type="email" name="mail"
-    value=""><br>
+    value="" required=""><br>
 	<input type="submit" value="Crear técnico">
 </form>
 <br>
