@@ -18,7 +18,7 @@
 
 <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'tech') include 'tech-header.php';?>
 
-<div class="clearfix">
+<div class="clearfix" id="pageContent">
 	<?= $pageContent ?>
 </div>
 

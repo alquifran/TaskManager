@@ -1,10 +1,10 @@
-/*body{
-	padding: 10px;
 
-}*/
 body{
     padding: 10px;
     background-color: #CEECF5;
+}
+#pageContent{
+    min-height: 470px;
 }
 
 .navbar ul li input[type=submit] {
