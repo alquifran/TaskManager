@@ -10,6 +10,7 @@ Crear tarea nueva:
 			<option value="<?=$client->getId();?>"><?=$client->getName();?></option>
 		<?php endforeach;?>
 	</select><br>
+	<?php if ($_SESSION['user_type'] == 'admin'){ ?>
 	Asignar a un técnico: <br>
 	<select name="tech_id">
 		<option value=""></option>
@@ -24,6 +25,11 @@ Crear tarea nueva:
 			<option value="<?=$tech->getId();?>"><?=$tech->getName();?></option>
 		<?php  } endforeach;?>
 	</select><br>
+	<?php } else { ?>
+	¿Asignar tarea a ti mismo? <input type="checkbox" name="self_assign" value="assign">
+	<br>
+
+	<?php } ?>
 
 	<input type="submit" name="submit">
 
