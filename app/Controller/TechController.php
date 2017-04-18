@@ -48,7 +48,7 @@ class TechController
 						$_POST[] = "";
 						die();
 					}else{
-						$message = "Su usuario está dado de baja. Por favor, póngase en contacto con el administrador: (email del administrador)";
+						$message = "Su usuario está dado de baja. Por favor, póngase en contacto con el administrador: admin@admin.com";
 					}
 				}else{
 					$message = "La contraseña introducida no es correcta";
@@ -103,13 +103,14 @@ class TechController
 			$view->render('add.php', ['clients' => $clients, 'techs' => $techs, 'pageTitle' => 'Crear tarea']);
 		}
 		else{
+			$tech_id = null;
 			if($_POST['client_id'] == ""){
 				$_POST['client_id'] = null;
 			}
-			if($_POST['tech_id'] == ""){
-				$_POST['tech_id'] = null;
+			if($_POST['self_assign'] == "assign"){
+				$tech_id = Tech::getTechByMail($_SESSION['mail'])->getId();
 			}
-			Task::addTask($_POST['name'], $_POST['desc'], $_POST['client_id'], $_POST['tech_id']);
+			Task::addTask($_POST['name'], $_POST['desc'], $_POST['client_id'], $tech_id);
 			$_POST = "";
 			header('Location:../listTask/');
 		}
